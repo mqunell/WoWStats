@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".archive.AddToonDialogFragment">
+
+    <EditText
+        android:id="@+id/add_name"
+        android:hint="Character name"
+        style="@style/dialog_edittext" />
+
+    <EditText
+        android:id="@+id/add_server"
+        android:hint="Server name"
+        style="@style/dialog_edittext" />
+
+    <Button
+        android:id="@+id/add"
+        android:text="Add"
+        style="@style/dialog_edittext" />
+
+</LinearLayout>
