@@ -1,12 +1,9 @@
 package com.mattqunell.wowstats;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 public class ToonListActivity extends AppCompatActivity {
 
@@ -15,17 +12,6 @@ public class ToonListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.container);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //DialogFragment fragment = new AddToonDialogFragment();
-                //fragment.show(getSupportFragmentManager(), "Add Character");
-
-                startActivity(new Intent(ToonListActivity.this, AddToonActivity.class));
-            }
-        });
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);

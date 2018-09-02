@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".archive.AddToonDialogFragment">
+    tools:context=".AddToonDialogFragment">
 
     <EditText
         android:id="@+id/add_name"
@@ -14,11 +14,6 @@
     <EditText
         android:id="@+id/add_server"
         android:hint="Server name"
-        style="@style/dialog_edittext" />
-
-    <Button
-        android:id="@+id/add"
-        android:text="Add"
         style="@style/dialog_edittext" />
 
 </LinearLayout>

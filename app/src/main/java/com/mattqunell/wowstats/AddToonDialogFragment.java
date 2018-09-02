@@ -1,4 +1,4 @@
-package com.mattqunell.wowstats.archive;
+package com.mattqunell.wowstats;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -42,7 +42,8 @@ public class AddToonDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Add the toon
-                        new BattleNetConnection(getActivity()).execute(mName.getText().toString(), mServer.getText().toString());
+                        new BattleNetConnection(getActivity())
+                                .execute(mName.getText().toString(), mServer.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
