@@ -14,16 +14,16 @@ import com.mattqunell.wowstats.R;
 import com.mattqunell.wowstats.data.BattleNetConnection;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A DialogFragment used for adding new Toons that passes the user-inputted name and realm to
+ * BattleNetConnection.
  */
 public class AddToonDialogFragment extends DialogFragment {
 
     private EditText mName;
     private EditText mServer;
 
-    public AddToonDialogFragment() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public AddToonDialogFragment() {}
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class AddToonDialogFragment extends DialogFragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         // Add the toon
                         new BattleNetConnection(getActivity())
                                 .execute(mName.getText().toString(), mServer.getText().toString());

@@ -5,6 +5,10 @@ import android.database.CursorWrapper;
 
 import com.mattqunell.wowstats.data.Toon;
 
+/**
+ * ToonCursorWrapper is used to traverse the database through CursorWrapper's functionality.
+ * getToon() parses and returns the Toon at TCW's current location in the database.
+ */
 public class ToonCursorWrapper extends CursorWrapper {
 
     /**

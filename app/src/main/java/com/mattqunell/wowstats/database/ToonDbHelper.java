@@ -4,6 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * When an instance of ToonDbHelper is created, the super(...) call:
+ *      1. Creates the database and sets the version number (onCreate)
+ *      2. Upgrades the database (onUpgrade)
+ *      3. Opens the database
+ */
 public class ToonDbHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;

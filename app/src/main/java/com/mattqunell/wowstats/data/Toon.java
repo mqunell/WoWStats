@@ -1,8 +1,8 @@
 package com.mattqunell.wowstats.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * Represents a Toon.
+ */
 public class Toon {
 
     private String mName;

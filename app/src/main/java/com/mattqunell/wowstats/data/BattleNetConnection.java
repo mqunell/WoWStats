@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Accesses Battle.net's API to retrieve data about Toons.
+ */
 public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
     private static final String TAG = "BattleNetConnection";

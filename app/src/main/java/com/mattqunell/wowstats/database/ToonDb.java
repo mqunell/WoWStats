@@ -10,22 +10,24 @@ import com.mattqunell.wowstats.data.Toon;
 import java.util.ArrayList;
 import java.util.List;
 
-// SEE RECEIPTS - ReceiptBook for the actual DB implementation guidelines
+/**
+ * ToonDb connects Activities/Fragments to the database. Only one instance of it can be created.
+ */
 public class ToonDb {
 
     // The one class to use throughout the app
-    private static ToonDb sToonDB;
+    private static ToonDb sToonDb;
 
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    // Static getter that creates sToonDB if it doesn't exist and returns it
+    // Static getter that creates sToonDb if it doesn't exist and returns it
     public static ToonDb get(Context context) {
-        if (sToonDB == null) {
-            sToonDB = new ToonDb(context);
+        if (sToonDb == null) {
+            sToonDb = new ToonDb(context);
         }
 
-        return sToonDB;
+        return sToonDb;
     }
 
     // Private constructor to limit instantiation

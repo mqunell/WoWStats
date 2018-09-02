@@ -1,5 +1,8 @@
 package com.mattqunell.wowstats.database;
 
+/**
+ * Represents the database's schema.
+ */
 public final class ToonDbSchema {
 
     // Table name

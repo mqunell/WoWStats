@@ -1,7 +1,6 @@
 package com.mattqunell.wowstats;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,17 +20,14 @@ import com.mattqunell.wowstats.database.ToonDb;
 import java.util.List;
 
 /**
- * todo
+ * Fragment that handles the RecyclerView and its components
  */
 public class ToonListFragment extends Fragment {
 
-    //private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
 
-    /**
-     * Mandatory empty constructor
-     */
+    // Mandatory empty constructor
     public ToonListFragment() {}
 
     @Override
@@ -40,6 +36,7 @@ public class ToonListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        // FAB listener
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +86,7 @@ public class ToonListFragment extends Fragment {
         }
     }
 
-    // todo
+    // Helper method that creates/updates the Adapter
     private void updateUi() {
 
         // Get the list of Toons
@@ -108,12 +105,16 @@ public class ToonListFragment extends Fragment {
 
 
     /**
-     * todo
+     * ToonHolder: The ViewHolder
+     * Inflates and owns each individual layout (fragment_toon_item) within the RecyclerView.
+     * The bind(Toon) method is called each time a new Toon should be displayed.
      */
     private class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        // The specific Toon
         private Toon mToon;
 
+        // UI elements
         private TextView mToonName;
         private TextView mToonRealm;
         private TextView mToonRace;
@@ -134,27 +135,29 @@ public class ToonListFragment extends Fragment {
             mToonItemLevel = itemView.findViewById(R.id.toon_item_level);
         }
 
+        // Sets the individual layout's elements
         public void bind(Toon toon) {
             mToon = toon;
 
-            // todo
             mToonName.setText(mToon.getName());
             mToonRealm.setText(mToon.getRealm());
             mToonRace.setText(mToon.getRace() + " " + mToon.get_Class());
-            //mToonClass.setText(mToon.getClassName());
+            //mToonClass.setText(mToon.get_Class());
             mToonLevel.setText("Level " + String.valueOf(mToon.getLevel()));
             mToonItemLevel.setText("iLevel " + String.valueOf(mToon.getItemLevel()));
         }
 
         @Override
         public void onClick(View view) {
-
+            // Start an activity for that specific character
         }
     }
 
 
     /**
-     * todo
+     * ToonAdapter: The Adapter
+     * Connects the ViewHolder and Toons by knowing how Toons and ToonDb are implemented.
+     * The overridden methods are all required and called by the RecyclerView itself.
      */
     private class ToonAdapter extends RecyclerView.Adapter<ToonHolder> {
 
@@ -164,16 +167,15 @@ public class ToonListFragment extends Fragment {
             mToons = toons;
         }
 
-        @NonNull
         @Override
-        public ToonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ToonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
             return new ToonHolder(layoutInflater, parent);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ToonHolder holder, int position) {
+        public void onBindViewHolder(ToonHolder holder, int position) {
             Toon toon = mToons.get(position);
             holder.bind(toon);
         }
