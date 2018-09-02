@@ -1,10 +1,7 @@
 package com.mattqunell.wowstats;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mattqunell.wowstats.data.Toon;
-import com.mattqunell.wowstats.data.ToonDB;
+import com.mattqunell.wowstats.database.ToonDb;
 
 import java.util.List;
 
@@ -61,7 +58,7 @@ public class ToonListFragment extends Fragment {
     private void updateUi() {
 
         // Get the list of Toons
-        List<Toon> toons = ToonDB.get(getActivity()).getToons();
+        List<Toon> toons = ToonDb.get(getActivity()).getToons();
 
         // Create/refresh the adapter
         if (mAdapter == null) {
@@ -108,10 +105,10 @@ public class ToonListFragment extends Fragment {
             // todo
             mToonName.setText(mToon.getName());
             mToonRealm.setText(mToon.getRealm());
-            mToonRace.setText(mToon.getRaceName() + " " + mToon.getClassName());
+            mToonRace.setText(mToon.getRace() + " " + mToon.get_Class());
             //mToonClass.setText(mToon.getClassName());
             mToonLevel.setText("Level " + String.valueOf(mToon.getLevel()));
-            mToonItemLevel.setText("iLevel: " + String.valueOf(mToon.getItemLevel()));
+            mToonItemLevel.setText("iLevel " + String.valueOf(mToon.getItemLevel()));
         }
 
         @Override

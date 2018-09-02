@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mattqunell.wowstats.database.ToonDb;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +22,43 @@ import java.util.Map;
 public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
     private static final String TAG = "BattleNetConnection";
+
+    // Battle.net stores each toon's race and class as ints. These Maps are used to convert these
+    // ints to their respective Strings
+    private static final Map<Integer, String> RACES;
+    private static final Map<Integer, String> CLASSES;
+
+    static {
+        RACES = new HashMap<>();
+        RACES.put(1, "Human");
+        RACES.put(2, "Orc");
+        RACES.put(3, "Dwarf");
+        RACES.put(4, "Night Elf");
+        RACES.put(5, "Undead");
+        RACES.put(6, "Tauren");
+        RACES.put(7, "Gnome");
+        RACES.put(8, "Troll");
+        RACES.put(9, "Goblin");
+        RACES.put(10, "Blood Elf");
+        RACES.put(11, "Draenei");
+        RACES.put(22, "Worgen");
+        RACES.put(25, "A. Pandaren");
+        RACES.put(26, "H. Pandaren");
+
+        CLASSES = new HashMap<>();
+        CLASSES.put(1, "Warrior");
+        CLASSES.put(2, "Paladin");
+        CLASSES.put(3, "Hunter");
+        CLASSES.put(4, "Rogue");
+        CLASSES.put(5, "Priest");
+        CLASSES.put(6, "Death Knight");
+        CLASSES.put(7, "Shaman");
+        CLASSES.put(8, "Mage");
+        CLASSES.put(9, "Warlock");
+        CLASSES.put(10, "Monk");
+        CLASSES.put(11, "Druid");
+        CLASSES.put(12, "Demon Hunter");
+    }
 
     private Context mContext;
 
@@ -57,16 +96,13 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
             String name = ch.getString("name");
             String realm = ch.getString("realm");
-            int raceNum = ch.getInt("race");
-            int classNum = ch.getInt("class");
+            String race = RACES.get(ch.getInt("race"));
+            String _class = CLASSES.get(ch.getInt("class"));
             int level = ch.getInt("level");
             int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-            //result = name + ", " + realm + ", " + level + ", " + RACES.get(raceNum) + ", " +
-            //       CLASSES.get(classNum) + ", " + itemLevel;
-
-            // Add the Toon to ToonDB
-            ToonDB.get(mContext).addToon(new Toon(name, realm, raceNum, classNum, level, itemLevel));
+            // Add the Toon to ToonDb
+            ToonDb.get(mContext).addToon(new Toon(name, realm, race, _class, level, itemLevel));
 
             result = "Success";
         }
