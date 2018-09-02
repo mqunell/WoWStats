@@ -19,8 +19,9 @@ import com.mattqunell.wowstats.data.BattleNetConnection;
  */
 public class AddToonDialogFragment extends DialogFragment {
 
+    // UI elements
     private EditText mName;
-    private EditText mServer;
+    private EditText mRealm;
 
     // Required empty public constructor
     public AddToonDialogFragment() {}
@@ -34,19 +35,32 @@ public class AddToonDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_add_toon, null);
 
+        // UI elements
         mName = view.findViewById(R.id.add_name);
-        mServer = view.findViewById(R.id.add_realm);
+        mRealm = view.findViewById(R.id.add_realm);
 
         builder.setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Add the toon
-                        new BattleNetConnection(getActivity())
-                                .execute(mName.getText().toString(), mServer.getText().toString());
+                        // Retrieve the data
+                        String name = mName.getText().toString();
+                        String realm = mRealm.getText().toString();
+
+                        // Replace " " in the realm name with "-"
+                        // ex. "Bleeding Hollow" -> "Bleeding-Hollow"
+                        if (realm.contains(" ")) {
+                            int spaceLoc = realm.indexOf(" ");
+                            realm = realm.substring(0, spaceLoc) + "-" +
+                                    realm.substring(spaceLoc + 1);
+                        }
+
+                        // Pass the name and realm to BattleNetConnection
+                        new BattleNetConnection(getActivity()).execute(name, realm);
                     }
                 })
+
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
