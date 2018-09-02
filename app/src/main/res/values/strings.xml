@@ -1,7 +1,13 @@
 <resources>
+    <!-- App -->
     <string name="app_name">WoW Stats</string>
-    <string name="title_activity_main2">Main2Activity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- fragment_add_toon -->
+    <string name="add_name">Name</string>
+    <string name="add_realm">Realm</string>
+
+    <!-- ToonListFragment -->
+    <string name="name_realm">%1$s %2$s</string>
+    <string name="level">Level %1$s</string>
+    <string name="item_level">iLevel %1$s</string>
 </resources>

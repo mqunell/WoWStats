@@ -6,8 +6,7 @@
     android:id="@+id/toon_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:orientation="horizontal">
+    android:layout_margin="8dp" >
 
     <TextView
         android:id="@+id/toon_name"

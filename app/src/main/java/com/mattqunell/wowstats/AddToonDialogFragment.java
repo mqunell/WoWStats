@@ -35,7 +35,7 @@ public class AddToonDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_toon, null);
 
         mName = view.findViewById(R.id.add_name);
-        mServer = view.findViewById(R.id.add_server);
+        mServer = view.findViewById(R.id.add_realm);
 
         builder.setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {

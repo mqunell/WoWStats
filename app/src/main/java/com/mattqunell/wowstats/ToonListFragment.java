@@ -37,7 +37,7 @@ public class ToonListFragment extends Fragment {
         setHasOptionsMenu(true);
 
         // FAB listener
-        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_toon);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,10 +141,10 @@ public class ToonListFragment extends Fragment {
 
             mToonName.setText(mToon.getName());
             mToonRealm.setText(mToon.getRealm());
-            mToonRace.setText(mToon.getRace() + " " + mToon.get_Class());
+            mToonRace.setText(getString(R.string.name_realm, mToon.getRace(), mToon.get_Class()));
             //mToonClass.setText(mToon.get_Class());
-            mToonLevel.setText("Level " + String.valueOf(mToon.getLevel()));
-            mToonItemLevel.setText("iLevel " + String.valueOf(mToon.getItemLevel()));
+            mToonLevel.setText(getString(R.string.level, String.valueOf(mToon.getLevel())));
+            mToonItemLevel.setText(getString(R.string.item_level, String.valueOf(mToon.getItemLevel())));
         }
 
         @Override
