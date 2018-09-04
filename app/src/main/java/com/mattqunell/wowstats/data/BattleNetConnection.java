@@ -94,34 +94,40 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 sb.append(temp);
             }
 
-            JSONArray jsonArray = new JSONArray("[" + sb.toString() + "]");
-            JSONObject ch = jsonArray.getJSONObject(0);
-
-            String name = ch.getString("name");
-            String realm = ch.getString("realm");
-            String race = RACES.get(ch.getInt("race"));
-            String _class = CLASSES.get(ch.getInt("class"));
-            int level = ch.getInt("level");
-            int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
-
-            // Add the Toon to ToonDb
-            ToonDb.get(mContext).addToon(new Toon(name, realm, race, _class, level, itemLevel));
-
-            result = "Success";
+            result = sb.toString();
         }
         catch (MalformedURLException e) {
             Log.e(TAG, e.toString());
-            result = "URL error";
+            result = "Error with URL";
         }
         catch (IOException e) {
             Log.e(TAG, e.toString());
-            result = "HTTP connection error";
-        }
-        catch (JSONException e) {
-            Log.e(TAG, e.toString());
-            result = "JSON error";
+            result = "Error with HTTP connection";
         }
 
         return result;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        if (!result.startsWith("Error with")) {
+            try {
+                JSONArray jsonArray = new JSONArray("[" + result + "]");
+                JSONObject ch = jsonArray.getJSONObject(0);
+
+                String name = ch.getString("name");
+                String realm = ch.getString("realm");
+                String race = RACES.get(ch.getInt("race"));
+                String _class = CLASSES.get(ch.getInt("class"));
+                int level = ch.getInt("level");
+                int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
+
+                // Add the Toon to ToonDb
+                ToonDb.get(mContext).addToon(new Toon(name, realm, race, _class, level, itemLevel));
+            }
+            catch (JSONException e) {
+                Log.e(TAG, e.toString());
+            }
+        }
     }
 }
