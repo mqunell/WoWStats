@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mattqunell.wowstats.R;
 import com.mattqunell.wowstats.data.Toon;
 
 import java.util.ArrayList;
@@ -36,10 +37,27 @@ public class ToonDb {
         mDatabase = new ToonDbHelper(mContext).getWritableDatabase();
     }
 
-    // Adds a new Toon
+    // Adds a new Toon or updates an existing one
     public void addToon(Toon toon) {
-        ContentValues values = getContentValues(toon);
-        mDatabase.insert(ToonDbSchema.NAME, null, values);
+        Boolean updated = false;
+
+        // If the Toon is already in the database, update its level and item level
+        for (Toon t : getToons()) {
+            if (t.getName().equals(toon.getName()) && t.getRealm().equals(toon.getRealm())) {
+                String updateSql = String.format(mContext.getString(R.string.sql_update),
+                        ToonDbSchema.NAME,
+                        ToonDbSchema.Cols.LEVEL, toon.getLevel(),
+                        ToonDbSchema.Cols.ITEMLEVEL, toon.getItemLevel());
+                mDatabase.execSQL(updateSql);
+                updated = true;
+            }
+        }
+
+        // If it wasn't found, add it
+        if (!updated) {
+            ContentValues values = getContentValues(toon);
+            mDatabase.insert(ToonDbSchema.NAME, null, values);
+        }
     }
 
     // Gets an ArrayList of all Toons

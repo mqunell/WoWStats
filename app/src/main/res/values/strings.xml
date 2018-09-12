@@ -10,4 +10,7 @@
     <string name="name_realm">%1$s %2$s</string>
     <string name="level">Level %1$s</string>
     <string name="item_level">iLevel %1$s</string>
+
+    <!-- ToonDb -->
+    <string name="sql_update">update %1$s set %2$s=%3$d, %4$s=%5$d where "%2$s"="%3$s" and "%2$s"="%3$s";</string>
 </resources>

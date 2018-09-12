@@ -21,6 +21,7 @@ import com.mattqunell.wowstats.data.BattleNetConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -93,7 +94,11 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
 
             // Refresh
             case R.id.refresh:
-                updateUi();
+                List<Toon> toons = ToonDb.get(getContext()).getToons();
+                for (Toon t : toons) {
+                    // ToonDb.get(getContext()).updateToon(new BattleNetConnection(this).execute(t.getName(), t.getRealm()));
+                    new BattleNetConnection(this).execute(t.getName(), t.getRealm());
+                }
 
             default:
                 return super.onOptionsItemSelected(item);
