@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
+    public AsyncResponse response = null;
+
     private static final String TAG = "BattleNetConnection";
 
     // Battle.net stores each toon's race and class as ints. These Maps are used to convert these
@@ -129,5 +131,7 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 Log.e(TAG, e.toString());
             }
         }
+
+        response.processFinish(result);
     }
 }

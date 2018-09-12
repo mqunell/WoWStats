@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mattqunell.wowstats.data.AsyncResponse;
+import com.mattqunell.wowstats.data.BattleNetConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Fragment that handles the RecyclerView and its components
  */
-public class ToonListFragment extends Fragment {
+public class ToonListFragment extends Fragment implements AsyncResponse {
 
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
@@ -36,12 +38,15 @@ public class ToonListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        final BattleNetConnection bnc = new BattleNetConnection(getContext());
+        bnc.response = this;
+
         // FAB listener
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_toon);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment fragment = new AddToonDialogFragment();
+                DialogFragment fragment = new AddToonDialogFragment(bnc);
                 fragment.show(getActivity().getSupportFragmentManager(), "Add Character");
             }
         });
@@ -84,6 +89,11 @@ public class ToonListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void processFinish(String output) {
+        updateUi();
     }
 
     // Helper method that creates/updates the Adapter

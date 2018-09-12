@@ -17,12 +17,16 @@ import com.mattqunell.wowstats.data.BattleNetConnection;
  */
 public class AddToonDialogFragment extends DialogFragment {
 
+    private BattleNetConnection mBNC;
+
     // UI elements
     private EditText mName;
     private EditText mRealm;
 
     // Required empty public constructor
-    public AddToonDialogFragment() {}
+    public AddToonDialogFragment(BattleNetConnection bnc) {
+        mBNC = bnc;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -55,7 +59,7 @@ public class AddToonDialogFragment extends DialogFragment {
                         }
 
                         // Pass the name and realm to BattleNetConnection
-                        new BattleNetConnection(getActivity()).execute(name, realm);
+                        mBNC.execute(name, realm);
                     }
                 })
 
