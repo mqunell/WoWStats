@@ -1,10 +1,7 @@
 package com.mattqunell.wowstats.data;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.mattqunell.wowstats.database.ToonDb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,11 +62,7 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
         CLASSES.put(12, "Demon Hunter");
     }
 
-    private Context mContext;
-
-    public BattleNetConnection(Context context) {
-        mContext = context;
-    }
+    public BattleNetConnection() {}
 
     @Override
     protected String doInBackground(String... strings) {
@@ -124,14 +117,12 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-                // Add the Toon to ToonDb
-                ToonDb.get(mContext).addToon(new Toon(name, realm, race, _class, level, itemLevel));
+                // Pass the Toon back to ToonListFragment
+                response.processFinish(new Toon(name, realm, race, _class, level, itemLevel));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
             }
         }
-
-        response.processFinish(result);
     }
 }

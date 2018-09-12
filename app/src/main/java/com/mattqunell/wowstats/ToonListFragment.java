@@ -35,9 +35,9 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
 
+        // Reference to this Fragment
         final ToonListFragment tlf = this;
 
         // FAB listener
@@ -46,7 +46,8 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             @Override
             public void onClick(View v) {
 
-                final BattleNetConnection bnc = new BattleNetConnection(getContext());
+                // Create a new BattleNetConnection with reference to this Fragment
+                final BattleNetConnection bnc = new BattleNetConnection();
                 bnc.response = tlf;
 
                 DialogFragment fragment = new AddToonDialogFragment(bnc);
@@ -94,12 +95,14 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         }
     }
 
+    // Called from BattleNetConnection's onPostExecute if successful
     @Override
-    public void processFinish(String output) {
+    public void processFinish(Toon toon) {
+        ToonDb.get(getContext()).addToon(toon);
         updateUi();
     }
 
-    // Helper method that creates/updates the Adapter
+    // Helper method that creates/sets or updates the Adapter
     private void updateUi() {
 
         // Get the list of Toons
