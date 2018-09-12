@@ -121,7 +121,7 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-                // Pass the Toon back to ToonListFragment.processFinish(Toon)
+                // Return the Toon to ToonListFragment.processFinish(Toon)
                 mResponse.processFinish(new Toon(name, realm, race, _class, level, itemLevel));
             }
             catch (JSONException e) {

@@ -1,5 +1,6 @@
 package com.mattqunell.wowstats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -20,6 +21,11 @@ import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
+import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_BUNDLE_NAME;
+import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_BUNDLE_REALM;
+import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_REQUEST_CODE;
 
 /**
  * Fragment that handles the RecyclerView and its components
@@ -45,7 +51,10 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment fragment = new AddToonDialogFragment(new BattleNetConnection(tlf));
+
+                // Create the DialogFragment and set this as the target for onActivityResult(...)
+                DialogFragment fragment = new AddToonDialogFragment();
+                fragment.setTargetFragment(tlf, ATDF_REQUEST_CODE);
                 fragment.show(getActivity().getSupportFragmentManager(), "Add Character");
             }
         });
@@ -87,6 +96,18 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Called from AddToonDialogFragment if successful
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ATDF_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
+                String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
+                new BattleNetConnection(this).execute(name, realm);
+            }
         }
     }
 

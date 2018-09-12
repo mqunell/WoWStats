@@ -1,15 +1,15 @@
 package com.mattqunell.wowstats;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
-import com.mattqunell.wowstats.data.BattleNetConnection;
 
 /**
  * A DialogFragment used for adding new Toons that passes the user-inputted name and realm to
@@ -17,16 +17,17 @@ import com.mattqunell.wowstats.data.BattleNetConnection;
  */
 public class AddToonDialogFragment extends DialogFragment {
 
-    private BattleNetConnection mBNC;
+    // Encapsulated request code and Bundle keys
+    public static final int ATDF_REQUEST_CODE = 1;
+    public static final String ATDF_BUNDLE_NAME = "ATDF_NAME";
+    public static final String ATDF_BUNDLE_REALM = "ATDF_REALM";
 
     // UI elements
     private EditText mName;
     private EditText mRealm;
 
     // Required empty public constructor
-    public AddToonDialogFragment(BattleNetConnection bnc) {
-        mBNC = bnc;
-    }
+    public AddToonDialogFragment() {}
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -58,8 +59,14 @@ public class AddToonDialogFragment extends DialogFragment {
                                     realm.substring(spaceLoc + 1);
                         }
 
-                        // Pass the name and realm to BattleNetConnection
-                        mBNC.execute(name, realm);
+                        // Return the name and realm to ToonListFragment.onActivityResult(...)
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ATDF_BUNDLE_NAME, name);
+                        bundle.putString(ATDF_BUNDLE_REALM, realm);
+
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),
+                                Activity.RESULT_OK,
+                                new Intent().putExtras(bundle));
                     }
                 })
 
