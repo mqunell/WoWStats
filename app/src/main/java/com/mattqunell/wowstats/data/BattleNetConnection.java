@@ -21,8 +21,10 @@ import java.util.Map;
  */
 public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
-    public AsyncResponse response = null;
+    // The class that implements AsyncResponse and listens for onPostExecute
+    private AsyncResponse mResponse;
 
+    // Debugging tag
     private static final String TAG = "BattleNetConnection";
 
     // Battle.net stores each toon's race and class as ints. These Maps are used to convert these
@@ -62,7 +64,9 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
         CLASSES.put(12, "Demon Hunter");
     }
 
-    public BattleNetConnection() {}
+    public BattleNetConnection(AsyncResponse response) {
+        mResponse = response;
+    }
 
     @Override
     protected String doInBackground(String... strings) {
@@ -117,8 +121,8 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-                // Pass the Toon back to ToonListFragment
-                response.processFinish(new Toon(name, realm, race, _class, level, itemLevel));
+                // Pass the Toon back to ToonListFragment.processFinish(Toon)
+                mResponse.processFinish(new Toon(name, realm, race, _class, level, itemLevel));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
