@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mattqunell.wowstats.data.AsyncResponse;
 import com.mattqunell.wowstats.data.BattleNetConnection;
@@ -114,8 +115,13 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
     // Called from BattleNetConnection's onPostExecute if successful
     @Override
     public void processFinish(Toon toon) {
-        ToonDb.get(getContext()).addToon(toon);
-        updateUi();
+        if (toon != null) {
+            ToonDb.get(getContext()).addToon(toon);
+            updateUi();
+        }
+        else {
+            Toast.makeText(getContext(), "Could not find character", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Helper method that creates/sets or updates the Adapter

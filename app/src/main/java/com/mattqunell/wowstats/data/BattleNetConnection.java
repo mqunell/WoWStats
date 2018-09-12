@@ -128,5 +128,8 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
                 Log.e(TAG, e.toString());
             }
         }
+        else {
+            mResponse.processFinish(null);
+        }
     }
 }
