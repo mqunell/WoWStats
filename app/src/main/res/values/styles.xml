@@ -27,7 +27,7 @@
         <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">12dp</item>
         <item name="android:layout_marginTop">12dp</item>
         <item name="android:ems">10</item>
-        <item name="android:inputType">textCapSentences</item>
+        <item name="android:inputType">textCapWords</item>
         <item name="android:state_multiline">false</item>
     </style>
 
