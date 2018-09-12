@@ -38,14 +38,17 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
 
         setHasOptionsMenu(true);
 
-        final BattleNetConnection bnc = new BattleNetConnection(getContext());
-        bnc.response = this;
+        final ToonListFragment tlf = this;
 
         // FAB listener
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_toon);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final BattleNetConnection bnc = new BattleNetConnection(getContext());
+                bnc.response = tlf;
+
                 DialogFragment fragment = new AddToonDialogFragment(bnc);
                 fragment.show(getActivity().getSupportFragmentManager(), "Add Character");
             }
