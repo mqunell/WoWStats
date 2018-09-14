@@ -48,6 +48,12 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
         RACES.put(22, "Worgen");
         RACES.put(25, "A. Pandaren");
         RACES.put(26, "H. Pandaren");
+        RACES.put(27, "Nightborne");
+        RACES.put(28, "Highmountain Tauren");
+        RACES.put(29, "Void Elf");
+        RACES.put(30, "Lightforged Draenei");
+        RACES.put(34, "Dark Iron Dwarf");
+        RACES.put(36, "Mag'har Orc");
 
         CLASSES = new HashMap<>();
         CLASSES.put(1, "Warrior");
