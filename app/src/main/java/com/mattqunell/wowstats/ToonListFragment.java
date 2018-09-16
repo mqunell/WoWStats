@@ -2,6 +2,7 @@ package com.mattqunell.wowstats;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,6 @@ import com.mattqunell.wowstats.data.BattleNetConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -158,6 +158,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         private Toon mToon;
 
         // UI elements
+        private ConstraintLayout mLayout;
         private TextView mToonName;
         private TextView mToonRealm;
         private TextView mToonRace;
@@ -170,6 +171,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             itemView.setOnClickListener(this);
 
             // UI elements
+            mLayout = itemView.findViewById(R.id.toon_item);
             mToonName = itemView.findViewById(R.id.toon_name);
             mToonRealm = itemView.findViewById(R.id.toon_realm);
             mToonRace = itemView.findViewById(R.id.toon_race);
@@ -188,6 +190,10 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             //mToonClass.setText(mToon.get_Class());
             mToonLevel.setText(getString(R.string.level, String.valueOf(mToon.getLevel())));
             mToonItemLevel.setText(getString(R.string.item_level, String.valueOf(mToon.getItemLevel())));
+
+            // todo: Set background color based on faction
+            // 0xAARRGGBB
+            mLayout.setBackgroundColor(0x4DFF0000);
         }
 
         @Override
