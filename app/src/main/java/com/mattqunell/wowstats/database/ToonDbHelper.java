@@ -28,6 +28,7 @@ public class ToonDbHelper extends SQLiteOpenHelper {
                 + ToonDbSchema.Cols.UUID   + ", "
                 + ToonDbSchema.Cols.NAME   + ", "
                 + ToonDbSchema.Cols.REALM  + ", "
+                + ToonDbSchema.Cols.FACTION + ", "
                 + ToonDbSchema.Cols.RACE   + ", "
                 + ToonDbSchema.Cols._CLASS + ", "
                 + ToonDbSchema.Cols.LEVEL  + ", "

@@ -13,6 +13,7 @@ public final class ToonDbSchema {
         public static final String UUID = "uuid";
         public static final String NAME = "name";
         public static final String REALM = "realm";
+        public static final String FACTION = "faction";
         public static final String RACE = "race";
         public static final String _CLASS = "_class";
         public static final String LEVEL = "level";

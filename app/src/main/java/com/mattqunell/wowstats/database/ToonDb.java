@@ -93,6 +93,7 @@ public class ToonDb {
         //values.put(ToonDbSchema.Cols.UUID, toon.getUuid().toString());
         values.put(ToonDbSchema.Cols.NAME, toon.getName());
         values.put(ToonDbSchema.Cols.REALM, toon.getRealm());
+        values.put(ToonDbSchema.Cols.FACTION, toon.getFaction());
         values.put(ToonDbSchema.Cols.RACE, toon.getRace());
         values.put(ToonDbSchema.Cols._CLASS, toon.get_Class());
         values.put(ToonDbSchema.Cols.LEVEL, toon.getLevel());

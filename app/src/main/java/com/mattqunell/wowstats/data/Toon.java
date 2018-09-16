@@ -7,14 +7,16 @@ public class Toon {
 
     private String mName;
     private String mRealm;
+    private int mFaction;  // Alliance = 0, Horde = 1
     private String mRace;
     private String m_Class;
     private int mLevel;
     private int mItemLevel;
 
-    public Toon(String name, String realm, String race, String _class, int level, int itemLevel) {
+    public Toon(String name, String realm, int faction, String race, String _class, int level, int itemLevel) {
         mName = name;
         mRealm = realm;
+        mFaction = faction;
         mRace = race;
         m_Class = _class;
         mLevel = level;
@@ -35,6 +37,14 @@ public class Toon {
 
     public void setRealm(String realm) {
         mRealm = realm;
+    }
+
+    public int getFaction() {
+        return mFaction;
+    }
+
+    public void setFaction(int faction) {
+        mFaction = faction;
     }
 
     public String getRace() {

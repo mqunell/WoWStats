@@ -122,13 +122,14 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
 
                 String name = ch.getString("name");
                 String realm = ch.getString("realm");
+                int faction = ch.getInt("faction");
                 String race = RACES.get(ch.getInt("race"));
                 String _class = CLASSES.get(ch.getInt("class"));
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
                 // Return the Toon to ToonListFragment.processFinish(Toon)
-                mResponse.processFinish(new Toon(name, realm, race, _class, level, itemLevel));
+                mResponse.processFinish(new Toon(name, realm, faction, race, _class, level, itemLevel));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
