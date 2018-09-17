@@ -191,9 +191,10 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             mToonLevel.setText(getString(R.string.level, String.valueOf(mToon.getLevel())));
             mToonItemLevel.setText(getString(R.string.item_level, String.valueOf(mToon.getItemLevel())));
 
-            // todo: Set background color based on faction
-            // 0xAARRGGBB
-            mLayout.setBackgroundColor(0x4DFF0000);
+            // Set background color based on faction
+            mLayout.setBackgroundColor(mToon.getFaction() == 0 ?
+                    getResources().getColor(R.color.colorAlliance) :
+                    getResources().getColor(R.color.colorHorde));
         }
 
         @Override

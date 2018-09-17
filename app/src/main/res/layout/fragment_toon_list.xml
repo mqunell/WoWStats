@@ -6,5 +6,6 @@
     android:name="com.mattqunell.wowstats.CharacterListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".ToonListFragment"
     tools:listitem="@layout/fragment_toon_item" />

@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- ToonListFragment - 0xAARRGGBB -->
+    <color name="colorAlliance">#A60000FF</color>
+    <color name="colorHorde">#A6FF0000</color>
+
+    <!-- fragment_toon_list -->
+    <color name="grey">#E6E6E6</color>
+
+    <!-- fragment_toon_item -->
+    <color name="white">#FFFFFF</color>
 </resources>
