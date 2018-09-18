@@ -162,12 +162,11 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         // UI elements
         private ConstraintLayout mLayout;
         private ImageView mClassIcon;
-        private TextView mToonName;
-        private TextView mToonRealm;
-        private TextView mToonRace;
-        private TextView mToonClass;
-        private TextView mToonLevel;
-        private TextView mToonItemLevel;
+        private TextView mToonTopLeftOne;
+        private TextView mToonTopLeftTwo;
+        private TextView mToonBottomLeft;
+        private TextView mToonTopRight;
+        private TextView mToonBottomRight;
 
         public ToonHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.fragment_toon_item, parent, false));
@@ -176,12 +175,11 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             // UI elements
             mLayout = itemView.findViewById(R.id.toon_item);
             mClassIcon = itemView.findViewById(R.id.class_icon);
-            mToonName = itemView.findViewById(R.id.toon_name);
-            mToonRealm = itemView.findViewById(R.id.toon_realm);
-            mToonRace = itemView.findViewById(R.id.toon_race);
-            mToonClass = itemView.findViewById(R.id.toon_class);
-            mToonLevel = itemView.findViewById(R.id.toon_level);
-            mToonItemLevel = itemView.findViewById(R.id.toon_item_level);
+            mToonTopLeftOne = itemView.findViewById(R.id.toon_top_left_one);
+            mToonTopLeftTwo = itemView.findViewById(R.id.toon_top_left_two);
+            mToonBottomLeft = itemView.findViewById(R.id.toon_bottom_left_one);
+            mToonTopRight = itemView.findViewById(R.id.toon_top_right);
+            mToonBottomRight = itemView.findViewById(R.id.toon_bottom_right);
         }
 
         // Sets the individual layout's elements
@@ -189,12 +187,11 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             mToon = toon;
 
             mClassIcon.setImageDrawable(getClassIcon(toon.get_Class()));
-            mToonName.setText(mToon.getName());
-            mToonRealm.setText(mToon.getRealm());
-            mToonRace.setText(getString(R.string.name_realm, mToon.getRace(), mToon.get_Class()));
-            //mToonClass.setText(mToon.get_Class());
-            mToonLevel.setText(getString(R.string.level, String.valueOf(mToon.getLevel())));
-            mToonItemLevel.setText(getString(R.string.item_level, String.valueOf(mToon.getItemLevel())));
+            mToonTopLeftOne.setText(mToon.getName());
+            mToonTopLeftTwo.setText(mToon.getRealm());
+            mToonBottomLeft.setText(mToon.getRace());
+            mToonTopRight.setText(getString(R.string.level_ilevel,
+                    String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
 
             // Set background color based on faction
             mLayout.setBackgroundColor(mToon.getFaction() == 0 ?

@@ -7,9 +7,10 @@
     <string name="add_realm">Realm</string>
 
     <!-- ToonListFragment -->
-    <string name="name_realm">%1$s %2$s</string>
     <string name="level">Level %1$s</string>
-    <string name="item_level">iLevel %1$s</string>
+    <string name="ilevel">iLevel %1$s</string>
+    <string name="race_class">%1$s %2$s</string>
+    <string name="level_ilevel">%1$s / %2$s</string>
 
     <!-- ToonDb -->
     <string name="sql_update">update %1$s set %2$s=%3$d, %4$s=%5$d where %6$s=\"%7$s\" and %8$s=\"%9$s\";</string>
