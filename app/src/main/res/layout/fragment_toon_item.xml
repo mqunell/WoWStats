@@ -9,14 +9,24 @@
     android:layout_marginBottom="2dp"
     android:padding="12dp">
 
+    <ImageView
+        android:id="@+id/class_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_refresh" />
+
     <TextView
         android:id="@+id/toon_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/class_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Blyskyn" />
 
@@ -35,10 +45,10 @@
         android:id="@+id/toon_race"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/class_icon"
         app:layout_constraintTop_toBottomOf="@+id/toon_name"
         tools:text="Gnome" />
 
@@ -57,9 +67,8 @@
         android:id="@+id/toon_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/toon_item_level"
+        app:layout_constraintBottom_toBottomOf="@+id/toon_realm"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="120" />
 
@@ -67,9 +76,10 @@
         android:id="@+id/toon_item_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toon_level"
         tools:text="325" />
 
 </android.support.constraint.ConstraintLayout>

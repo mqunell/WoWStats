@@ -1,6 +1,7 @@
 package com.mattqunell.wowstats;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -159,6 +161,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
 
         // UI elements
         private ConstraintLayout mLayout;
+        private ImageView mClassIcon;
         private TextView mToonName;
         private TextView mToonRealm;
         private TextView mToonRace;
@@ -172,6 +175,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
 
             // UI elements
             mLayout = itemView.findViewById(R.id.toon_item);
+            mClassIcon = itemView.findViewById(R.id.class_icon);
             mToonName = itemView.findViewById(R.id.toon_name);
             mToonRealm = itemView.findViewById(R.id.toon_realm);
             mToonRace = itemView.findViewById(R.id.toon_race);
@@ -184,6 +188,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         public void bind(Toon toon) {
             mToon = toon;
 
+            mClassIcon.setImageDrawable(getClassIcon(toon.get_Class()));
             mToonName.setText(mToon.getName());
             mToonRealm.setText(mToon.getRealm());
             mToonRace.setText(getString(R.string.name_realm, mToon.getRace(), mToon.get_Class()));
@@ -200,6 +205,62 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         @Override
         public void onClick(View view) {
             // Start an activity for that specific character
+        }
+
+        // Helper method that gets the correct Drawable based on the Toon's class
+        private Drawable getClassIcon(String _class) {
+            Drawable icon = null;
+            switch (_class) {
+                case "Death Knight":
+                    icon = getResources().getDrawable(R.drawable.death_knight);
+                    break;
+
+                case "Demon Hunter":
+                    icon = getResources().getDrawable(R.drawable.demon_hunter);
+                    break;
+
+                case "Druid":
+                    icon = getResources().getDrawable(R.drawable.druid);
+                    break;
+
+                case "Hunter":
+                    icon = getResources().getDrawable(R.drawable.hunter);
+                    break;
+
+                case "Mage":
+                    icon = getResources().getDrawable(R.drawable.mage);
+                    break;
+
+                case "Monk":
+                    icon = getResources().getDrawable(R.drawable.monk);
+                    break;
+
+                case "Paladin":
+                    icon = getResources().getDrawable(R.drawable.paladin);
+                    break;
+
+                case "Priest":
+                    icon = getResources().getDrawable(R.drawable.priest);
+                    break;
+
+                case "Rogue":
+                    icon = getResources().getDrawable(R.drawable.rogue);
+                    break;
+
+                case "Shaman":
+                    icon = getResources().getDrawable(R.drawable.shaman);
+                    break;
+
+                case "Warlock":
+                    icon = getResources().getDrawable(R.drawable.warlock);
+                    break;
+
+                case "Warrior":
+                    icon = getResources().getDrawable(R.drawable.warrior);
+                    break;
+            }
+
+            return icon;
         }
     }
 
