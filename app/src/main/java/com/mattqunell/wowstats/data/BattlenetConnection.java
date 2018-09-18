@@ -19,13 +19,13 @@ import java.util.Map;
 /**
  * Accesses Battle.net's API to retrieve data about Toons.
  */
-public class BattleNetConnection extends AsyncTask<String, Void, String> {
+public class BattlenetConnection extends AsyncTask<String, Void, String> {
 
-    // The class that implements AsyncResponse and listens for onPostExecute
-    private AsyncResponse mResponse;
+    // The class that implements BattlenetAsyncResponse and listens for onPostExecute
+    private BattlenetAsyncResponse mResponse;
 
     // Debugging tag
-    private static final String TAG = "BattleNetConnection";
+    private static final String TAG = "BattlenetConnection";
 
     // Battle.net stores each toon's race and class as ints. These Maps are used to convert these
     // ints to their respective Strings
@@ -70,13 +70,14 @@ public class BattleNetConnection extends AsyncTask<String, Void, String> {
         CLASSES.put(12, "Demon Hunter");
     }
 
-    public BattleNetConnection(AsyncResponse response) {
+    public BattlenetConnection(BattlenetAsyncResponse response) {
         mResponse = response;
     }
 
     @Override
     protected String doInBackground(String... strings) {
 
+        // Web address
         String address = "https://us.api.battle.net/wow/character/" + strings[1] + "/" + strings[0]
                 + "?fields=items&locale=en_US&apikey=kvh377u89xg3v3g3pnn8txydwc4ckdwd";
 

@@ -19,8 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mattqunell.wowstats.data.AsyncResponse;
-import com.mattqunell.wowstats.data.BattleNetConnection;
+import com.mattqunell.wowstats.data.BattlenetAsyncResponse;
+import com.mattqunell.wowstats.data.BattlenetConnection;
+import com.mattqunell.wowstats.data.RaiderioConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
@@ -34,7 +35,7 @@ import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_REQUEST_CODE;
 /**
  * Fragment that handles the RecyclerView and its components
  */
-public class ToonListFragment extends Fragment implements AsyncResponse {
+public class ToonListFragment extends Fragment implements BattlenetAsyncResponse {
 
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
@@ -47,7 +48,7 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        // Reference to this Fragment for each instance of BattleNetConnection
+        // Reference to this Fragment for each instance of BattlenetConnection
         final ToonListFragment tlf = this;
 
         // FAB listener
@@ -98,8 +99,8 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             case R.id.refresh:
                 List<Toon> toons = ToonDb.get(getContext()).getToons();
                 for (Toon t : toons) {
-                    // ToonDb.get(getContext()).updateToon(new BattleNetConnection(this).execute(t.getName(), t.getRealm()));
-                    new BattleNetConnection(this).execute(t.getName(), t.getRealm());
+                    // ToonDb.get(getContext()).updateToon(new BattlenetConnection(this).execute(t.getName(), t.getRealm()));
+                    new BattlenetConnection(this).execute(t.getName(), t.getRealm());
                 }
 
             default:
@@ -114,16 +115,17 @@ public class ToonListFragment extends Fragment implements AsyncResponse {
             if (resultCode == RESULT_OK) {
                 String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
                 String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
-                new BattleNetConnection(this).execute(name, realm);
+                new BattlenetConnection(this).execute(name, realm);
             }
         }
     }
 
-    // Called from BattleNetConnection's onPostExecute if successful
+    // Called from BattlenetConnection's onPostExecute if successful
     @Override
     public void processFinish(Toon toon) {
         if (toon != null) {
             ToonDb.get(getContext()).addToon(toon);
+            new RaiderioConnection(toon).execute();
             updateUi();
         }
         else {

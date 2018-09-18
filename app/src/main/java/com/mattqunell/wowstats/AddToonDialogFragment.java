@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 /**
  * A DialogFragment used for adding new Toons that passes the user-inputted name and realm to
- * BattleNetConnection.
+ * BattlenetConnection.
  */
 public class AddToonDialogFragment extends DialogFragment {
 
