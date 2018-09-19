@@ -14,15 +14,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Accesses Raider.IO's API to retrieve Mythic Plus data about Toons.
+ */
 public class RaiderioConnection extends AsyncTask<String, Void, String> {
 
-    // The Toon whose score will be updated
+    // The class that implements RaiderioAsyncResponse and listens for onPostExecute
+    private RaiderioAsyncResponse mResponse;
+
+    // The Toon being updated with mythic plus data
     private Toon mToon;
 
     // Debugging tag
     private static final String TAG = "RaiderioConnection";
 
-    public RaiderioConnection(Toon toon) {
+    public RaiderioConnection(RaiderioAsyncResponse response, Toon toon) {
+        mResponse = response;
         mToon = toon;
     }
 
@@ -81,17 +88,23 @@ public class RaiderioConnection extends AsyncTask<String, Void, String> {
 
                 int score = ch.getJSONObject("mythic_plus_scores").getInt("all");
 
-                Log.v(TAG, String.valueOf(score));
+                int highest = 0;
+                JSONArray arr = ch.getJSONArray("mythic_plus_weekly_highest_level_runs");
+                if (arr.length() > 0) {
+                    JSONObject obj = arr.getJSONObject(0);
+                    highest = obj.getInt("mythic_level");
+                }
+
+                // Set the mythic score and highest mythic
+                mToon.setMythicScore(score);
+                mToon.setHighestMythic(highest);
 
                 // Return the Toon to ToonListFragment.processFinish(Toon)
-                //mResponse.processFinish(new Toon(name, realm, faction, race, _class, level, itemLevel));
+                mResponse.processRaiderio(mToon);
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
             }
-        }
-        else {
-            //mResponse.processFinish(null);
         }
     }
 }

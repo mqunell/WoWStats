@@ -41,14 +41,16 @@ public class ToonDb {
     public void addToon(Toon toon) {
         Boolean updated = false;
 
-        // If the Toon is already in the database, update its level and item level
+        // If the Toon is already in the database, update its level, item level, and m+ score
+        // ex. update toons set level=120, itemlevel=350, mythicscore=500 where name="Blyskyn" and realm="Shadowsong";
         for (Toon t : getToons()) {
             if (t.getName().equals(toon.getName()) && t.getRealm().equals(toon.getRealm())) {
-                // ex. update toons set level=120, itemlevel=350 where name="Blyskyn" and realm="Shadowsong";
                 String updateSql = String.format(mContext.getString(R.string.sql_update),
                         ToonDbSchema.NAME,
                         ToonDbSchema.Cols.LEVEL, toon.getLevel(),
                         ToonDbSchema.Cols.ITEMLEVEL, toon.getItemLevel(),
+                        ToonDbSchema.Cols.MYTHICSCORE, toon.getMythicScore(),
+                        ToonDbSchema.Cols.HIGHESTMYTHIC, toon.getHighestMythic(),
                         ToonDbSchema.Cols.NAME, toon.getName(),
                         ToonDbSchema.Cols.REALM, toon.getRealm());
                 mDatabase.execSQL(updateSql);
@@ -90,7 +92,6 @@ public class ToonDb {
         // A ContentValues is a key-value class specifically designed for SQLite data
         ContentValues values = new ContentValues();
 
-        //values.put(ToonDbSchema.Cols.UUID, toon.getUuid().toString());
         values.put(ToonDbSchema.Cols.NAME, toon.getName());
         values.put(ToonDbSchema.Cols.REALM, toon.getRealm());
         values.put(ToonDbSchema.Cols.FACTION, toon.getFaction());
@@ -98,6 +99,8 @@ public class ToonDb {
         values.put(ToonDbSchema.Cols._CLASS, toon.get_Class());
         values.put(ToonDbSchema.Cols.LEVEL, toon.getLevel());
         values.put(ToonDbSchema.Cols.ITEMLEVEL, toon.getItemLevel());
+        values.put(ToonDbSchema.Cols.MYTHICSCORE, toon.getMythicScore());
+        values.put(ToonDbSchema.Cols.HIGHESTMYTHIC, toon.getHighestMythic());
 
         return values;
     }

@@ -12,8 +12,10 @@ public class Toon {
     private String m_Class;
     private int mLevel;
     private int mItemLevel;
+    private int mMythicScore;
+    private int mHighestMythic;
 
-    public Toon(String name, String realm, int faction, String race, String _class, int level, int itemLevel) {
+    public Toon(String name, String realm, int faction, String race, String _class, int level, int itemLevel, int mythicScore, int highestMythic) {
         mName = name;
         mRealm = realm;
         mFaction = faction;
@@ -21,6 +23,8 @@ public class Toon {
         m_Class = _class;
         mLevel = level;
         mItemLevel = itemLevel;
+        mMythicScore = mythicScore;
+        mHighestMythic = highestMythic;
     }
 
     public String getName() {
@@ -79,8 +83,32 @@ public class Toon {
         mItemLevel = itemLevel;
     }
 
+    public int getMythicScore() {
+        return mMythicScore;
+    }
+
+    public void setMythicScore(int mythicScore) {
+        mMythicScore = mythicScore;
+
+    }
+
+    public int getHighestMythic() {
+        return mHighestMythic;
+    }
+
+    public void setHighestMythic(int highestMythic) {
+        mHighestMythic = highestMythic;
+    }
+
     public String toString() {
-        return mName + "-" + mRealm + ". Level " + mLevel + " " + mRace + " " + m_Class +
-                ". Item level " + mItemLevel + ".";
+        return "Name: " + mName
+                + " Realm: " + mRealm
+                + " Faction: " + mFaction
+                + " Race: " + mRace
+                + " Class: " + m_Class
+                + " Level: " + mLevel
+                + " iLevel: " + mItemLevel
+                + " MythicScore: " + mMythicScore
+                + " HighestMythic: " + mHighestMythic;
     }
 }

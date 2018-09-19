@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.mattqunell.wowstats.data.BattlenetAsyncResponse;
 import com.mattqunell.wowstats.data.BattlenetConnection;
+import com.mattqunell.wowstats.data.RaiderioAsyncResponse;
 import com.mattqunell.wowstats.data.RaiderioConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
@@ -35,7 +36,8 @@ import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_REQUEST_CODE;
 /**
  * Fragment that handles the RecyclerView and its components
  */
-public class ToonListFragment extends Fragment implements BattlenetAsyncResponse {
+public class ToonListFragment extends Fragment
+        implements BattlenetAsyncResponse, RaiderioAsyncResponse {
 
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
@@ -99,8 +101,8 @@ public class ToonListFragment extends Fragment implements BattlenetAsyncResponse
             case R.id.refresh:
                 List<Toon> toons = ToonDb.get(getContext()).getToons();
                 for (Toon t : toons) {
-                    // ToonDb.get(getContext()).updateToon(new BattlenetConnection(this).execute(t.getName(), t.getRealm()));
                     new BattlenetConnection(this).execute(t.getName(), t.getRealm());
+                    //new RaiderioConnection(this).execute(t.getName(), t.getRealm());
                 }
 
             default:
@@ -122,15 +124,26 @@ public class ToonListFragment extends Fragment implements BattlenetAsyncResponse
 
     // Called from BattlenetConnection's onPostExecute if successful
     @Override
-    public void processFinish(Toon toon) {
+    public void processBattlenet(Toon toon) {
         if (toon != null) {
-            ToonDb.get(getContext()).addToon(toon);
-            new RaiderioConnection(toon).execute();
-            updateUi();
+            if (toon.getLevel() == 120) {
+                new RaiderioConnection(this, toon).execute();
+            }
+            else {
+                ToonDb.get(getContext()).addToon(toon);
+                updateUi();
+            }
         }
         else {
             Toast.makeText(getContext(), "Could not find character", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Called from RaiderioConnection's onPostExecute if successful
+    @Override
+    public void processRaiderio(Toon toon) {
+        ToonDb.get(getContext()).addToon(toon);
+        updateUi();
     }
 
     // Helper method that creates/sets or updates the Adapter
@@ -194,6 +207,8 @@ public class ToonListFragment extends Fragment implements BattlenetAsyncResponse
             mToonBottomLeft.setText(mToon.getRace());
             mToonTopRight.setText(getString(R.string.level_ilevel,
                     String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
+
+            mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic, mToon.getMythicScore(), mToon.getHighestMythic()));
 
             // Set background color based on faction
             mLayout.setBackgroundColor(mToon.getFaction() == 0 ?

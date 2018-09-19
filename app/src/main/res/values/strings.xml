@@ -11,7 +11,8 @@
     <string name="ilevel">iLevel %1$s</string>
     <string name="race_class">%1$s %2$s</string>
     <string name="level_ilevel">%1$s / %2$s</string>
+    <string name="mythicscore_highestmythic">%1$d / %2$d</string>
 
     <!-- ToonDb -->
-    <string name="sql_update">update %1$s set %2$s=%3$d, %4$s=%5$d where %6$s=\"%7$s\" and %8$s=\"%9$s\";</string>
+    <string name="sql_update">update %1$s set %2$s=%3$d, %4$s=%5$d, %6$s=%7$d, %8$s=%9$d where %10$s=\"%11$s\" and %12$s=\"%13$s\";</string>
 </resources>

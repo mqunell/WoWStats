@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Accesses Battle.net's API to retrieve data about Toons.
+ * Accesses Battle.net's API to retrieve general data about Toons.
  */
 public class BattlenetConnection extends AsyncTask<String, Void, String> {
 
@@ -130,14 +130,15 @@ public class BattlenetConnection extends AsyncTask<String, Void, String> {
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
                 // Return the Toon to ToonListFragment.processFinish(Toon)
-                mResponse.processFinish(new Toon(name, realm, faction, race, _class, level, itemLevel));
+                // Mythic plus data is implemented separately in RaiderioConnection
+                mResponse.processBattlenet(new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
             }
         }
         else {
-            mResponse.processFinish(null);
+            mResponse.processBattlenet(null);
         }
     }
 }

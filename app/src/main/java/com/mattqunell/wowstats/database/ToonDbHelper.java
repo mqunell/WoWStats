@@ -23,16 +23,16 @@ public class ToonDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create the table
-        db.execSQL("create table " + ToonDbSchema.NAME + "(" +
-                " _id integer primary key autoincrement, "
-                + ToonDbSchema.Cols.UUID   + ", "
+        db.execSQL("create table " + ToonDbSchema.NAME + "("
                 + ToonDbSchema.Cols.NAME   + ", "
                 + ToonDbSchema.Cols.REALM  + ", "
                 + ToonDbSchema.Cols.FACTION + ", "
                 + ToonDbSchema.Cols.RACE   + ", "
                 + ToonDbSchema.Cols._CLASS + ", "
                 + ToonDbSchema.Cols.LEVEL  + ", "
-                + ToonDbSchema.Cols.ITEMLEVEL
+                + ToonDbSchema.Cols.ITEMLEVEL + ", "
+                + ToonDbSchema.Cols.MYTHICSCORE + ", "
+                + ToonDbSchema.Cols.HIGHESTMYTHIC
                 + ")"
         );
     }
