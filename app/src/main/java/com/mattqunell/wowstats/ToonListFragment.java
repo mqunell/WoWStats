@@ -124,14 +124,14 @@ public class ToonListFragment extends Fragment
     /*
      * Called from BattlenetConnection's onPostExecute
      *
-     * Toon exists, = level 120: Send to RaiderioConnection for more data
-     * Toon exists, < level 120: Add to database and update
+     * Toon exists, = max level: Send to RaiderioConnection for mythic data
+     * Toon exists, < max level: Add to database and update
      * Toon does not exist: Toast
      */
     @Override
     public void processBattlenet(Toon toon) {
         if (toon != null) {
-            if (toon.getLevel() == 120) {
+            if (toon.getLevel() == BattlenetConnection.MAX_LEVEL) {
                 new RaiderioConnection(this, toon).execute();
             }
             else {
@@ -206,14 +206,18 @@ public class ToonListFragment extends Fragment
         public void bind(Toon toon) {
             mToon = toon;
 
-            mClassIcon.setImageDrawable(getClassIcon(toon.get_Class()));
+            mClassIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
             mToonTopLeftOne.setText(mToon.getName());
             mToonTopLeftTwo.setText(mToon.getRealm());
             mToonBottomLeft.setText(mToon.getRace());
             mToonTopRight.setText(getString(R.string.level_ilevel,
                     String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
-            mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic,
-                    mToon.getMythicScore(), mToon.getHighestMythic()));
+
+            // Show mythic data if the Toon is max level
+            if (mToon.getLevel() == BattlenetConnection.MAX_LEVEL) {
+                mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic,
+                        mToon.getMythicScore(), mToon.getHighestMythic()));
+            }
 
             // Set background color based on faction
             mLayout.setBackgroundColor(mToon.getFaction() == 0 ?

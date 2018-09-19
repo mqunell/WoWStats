@@ -21,6 +21,8 @@ import java.util.Map;
  */
 public class BattlenetConnection extends AsyncTask<String, Void, String> {
 
+    public static final int MAX_LEVEL = 120;
+
     // The class that implements BattlenetAsyncResponse and listens for onPostExecute
     private BattlenetAsyncResponse mResponse;
 
