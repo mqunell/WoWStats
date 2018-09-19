@@ -22,7 +22,7 @@ public class RaiderioConnection extends AsyncTask<String, Void, String> {
     // The class that implements RaiderioAsyncResponse and listens for onPostExecute
     private RaiderioAsyncResponse mResponse;
 
-    // The Toon being updated with mythic plus data
+    // The Toon being updated with mythic data
     private Toon mToon;
 
     // Debugging tag
@@ -38,6 +38,8 @@ public class RaiderioConnection extends AsyncTask<String, Void, String> {
 
         String name = mToon.getName();
         String realm = mToon.getRealm();
+
+        // Format the realm, if necessary
         if (realm.contains(" ")) {
             realm = realm.substring(0, realm.indexOf(" ")) + "%20" + realm.substring(realm.indexOf(" ") + 1);
         }
@@ -99,7 +101,7 @@ public class RaiderioConnection extends AsyncTask<String, Void, String> {
                 mToon.setMythicScore(score);
                 mToon.setHighestMythic(highest);
 
-                // Return the Toon to ToonListFragment.processFinish(Toon)
+                // Return the Toon to ToonListFragment.processRaiderio(Toon)
                 mResponse.processRaiderio(mToon);
             }
             catch (JSONException e) {

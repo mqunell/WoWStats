@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * A DialogFragment used for adding new Toons that passes the user-inputted name and realm to
- * BattlenetConnection.
+ * A DialogFragment used for adding new Toons that passes the user-inputted name and realm back to
+ * ToonListFragment.
  */
 public class AddToonDialogFragment extends DialogFragment {
 
@@ -51,8 +51,7 @@ public class AddToonDialogFragment extends DialogFragment {
                         String name = mName.getText().toString();
                         String realm = mRealm.getText().toString();
 
-                        // Replace " " in the realm name with "-"
-                        // ex. "Bleeding Hollow" -> "Bleeding-Hollow"
+                        // Format realm names with " " (ex. "Bleeding Hollow" -> "Bleeding-Hollow")
                         if (realm.contains(" ")) {
                             int spaceLoc = realm.indexOf(" ");
                             realm = realm.substring(0, spaceLoc) + "-" +

@@ -129,8 +129,8 @@ public class BattlenetConnection extends AsyncTask<String, Void, String> {
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-                // Return the Toon to ToonListFragment.processFinish(Toon)
-                // Mythic plus data is implemented separately in RaiderioConnection
+                // Return the Toon to ToonListFragment.processBattlenet(Toon)
+                // Note: Mythic data (the 0, 0) is implemented separately in RaiderioConnection
                 mResponse.processBattlenet(new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
             }
             catch (JSONException e) {

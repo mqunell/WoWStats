@@ -37,12 +37,17 @@ public class ToonDb {
         mDatabase = new ToonDbHelper(mContext).getWritableDatabase();
     }
 
-    // Adds a new Toon or updates an existing one
+    /*
+     * Adds a new Toon or updates an existing one
+     *
+     * If the Toon already exists in the database, update the necessary info.
+     * ex. update toons set level=120, itemlevel=350, mythicscore=500, highestmythic=10
+     *     where name="Blyskyn" and realm="Shadowsong";
+     */
     public void addToon(Toon toon) {
         Boolean updated = false;
 
-        // If the Toon is already in the database, update its level, item level, and m+ score
-        // ex. update toons set level=120, itemlevel=350, mythicscore=500 where name="Blyskyn" and realm="Shadowsong";
+        // Attempt to find and update a Toon
         for (Toon t : getToons()) {
             if (t.getName().equals(toon.getName()) && t.getRealm().equals(toon.getRealm())) {
                 String updateSql = String.format(mContext.getString(R.string.sql_update),
@@ -58,7 +63,7 @@ public class ToonDb {
             }
         }
 
-        // If it wasn't found, add it
+        // Add the Toon if not previously found
         if (!updated) {
             ContentValues values = getContentValues(toon);
             mDatabase.insert(ToonDbSchema.NAME, null, values);
@@ -86,10 +91,8 @@ public class ToonDb {
         return toons;
     }
 
-    // Helper method that converts a Toon to a ContentValues
+    // Converts a Toon to a ContentValues (key-value class specifically designed for SQLite data)
     private static ContentValues getContentValues(Toon toon) {
-
-        // A ContentValues is a key-value class specifically designed for SQLite data
         ContentValues values = new ContentValues();
 
         values.put(ToonDbSchema.Cols.NAME, toon.getName());

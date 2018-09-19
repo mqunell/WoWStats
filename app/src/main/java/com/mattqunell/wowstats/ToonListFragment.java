@@ -97,12 +97,11 @@ public class ToonListFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            // Refresh
+            // Refresh - updates all Toons
             case R.id.refresh:
                 List<Toon> toons = ToonDb.get(getContext()).getToons();
                 for (Toon t : toons) {
                     new BattlenetConnection(this).execute(t.getName(), t.getRealm());
-                    //new RaiderioConnection(this).execute(t.getName(), t.getRealm());
                 }
 
             default:
@@ -122,7 +121,13 @@ public class ToonListFragment extends Fragment
         }
     }
 
-    // Called from BattlenetConnection's onPostExecute if successful
+    /*
+     * Called from BattlenetConnection's onPostExecute
+     *
+     * Toon exists, = level 120: Send to RaiderioConnection for more data
+     * Toon exists, < level 120: Add to database and update
+     * Toon does not exist: Toast
+     */
     @Override
     public void processBattlenet(Toon toon) {
         if (toon != null) {
@@ -139,7 +144,7 @@ public class ToonListFragment extends Fragment
         }
     }
 
-    // Called from RaiderioConnection's onPostExecute if successful
+    // Called from RaiderioConnection's onPostExecute if mythic data added
     @Override
     public void processRaiderio(Toon toon) {
         ToonDb.get(getContext()).addToon(toon);
@@ -207,8 +212,8 @@ public class ToonListFragment extends Fragment
             mToonBottomLeft.setText(mToon.getRace());
             mToonTopRight.setText(getString(R.string.level_ilevel,
                     String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
-
-            mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic, mToon.getMythicScore(), mToon.getHighestMythic()));
+            mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic,
+                    mToon.getMythicScore(), mToon.getHighestMythic()));
 
             // Set background color based on faction
             mLayout.setBackgroundColor(mToon.getFaction() == 0 ?

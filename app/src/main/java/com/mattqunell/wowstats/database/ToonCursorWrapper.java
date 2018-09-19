@@ -32,6 +32,7 @@ public class ToonCursorWrapper extends CursorWrapper {
         int mythicScore = getInt(getColumnIndex(ToonDbSchema.Cols.MYTHICSCORE));
         int highestMythic = getInt(getColumnIndex(ToonDbSchema.Cols.HIGHESTMYTHIC));
 
-        return new Toon(name, realm, faction, race, _class, level, itemLevel, mythicScore, highestMythic);
+        return new Toon(name, realm, faction, race, _class,
+                level, itemLevel, mythicScore, highestMythic);
     }
 }
