@@ -3,6 +3,8 @@ package com.mattqunell.wowstats.data;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mattqunell.wowstats.Secret;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,20 +19,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Accesses Battle.net's API to retrieve general data about Toons.
+ * Accesses Blizzard.com's API to retrieve general data about Toons.
  */
-public class BattlenetConnection extends AsyncTask<String, Void, String> {
+public class BlizzardConnection extends AsyncTask<String, Void, String> {
 
     public static final int MAX_LEVEL = 120;
 
-    // The class that implements BattlenetAsyncResponse and listens for onPostExecute
-    private BattlenetAsyncResponse mResponse;
+    // The class that implements BlizzardAsyncResponse and listens for onPostExecute
+    private BlizzardAsyncResponse mResponse;
 
     // Debugging tag
-    private static final String TAG = "BattlenetConnection";
+    private static final String TAG = "BlizzardConnection";
 
-    // Battle.net stores each toon's race and class as ints. These Maps are used to convert these
-    // ints to their respective Strings
+    // Blizzard stores each toon's race and class as ints. These Maps are used to convert these ints
+    // to their respective Strings
     private static final Map<Integer, String> RACES;
     private static final Map<Integer, String> CLASSES;
 
@@ -72,7 +74,7 @@ public class BattlenetConnection extends AsyncTask<String, Void, String> {
         CLASSES.put(12, "Demon Hunter");
     }
 
-    public BattlenetConnection(BattlenetAsyncResponse response) {
+    public BlizzardConnection(BlizzardAsyncResponse response) {
         mResponse = response;
     }
 
@@ -80,8 +82,10 @@ public class BattlenetConnection extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
 
         // Web address
-        String address = "https://us.api.battle.net/wow/character/" + strings[1] + "/" + strings[0]
-                + "?fields=items&locale=en_US&apikey=kvh377u89xg3v3g3pnn8txydwc4ckdwd";
+        String fields = "items&";
+        String address = "https://us.api.blizzard.com/wow/character/" + strings[1] + "/"
+                + strings[0] + "?fields=" + fields + "locale=en_US&access_token="
+                + Secret.BATTLE_TOKEN;
 
         String result;
 
@@ -131,16 +135,16 @@ public class BattlenetConnection extends AsyncTask<String, Void, String> {
                 int level = ch.getInt("level");
                 int itemLevel = ch.getJSONObject("items").getInt("averageItemLevel");
 
-                // Return the Toon to ToonListFragment.processBattlenet(Toon)
-                // Note: Mythic data (the 0, 0) is implemented separately in RaiderioConnection
-                mResponse.processBattlenet(new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
+                // Return the Toon to ToonListFragment.processBlizzard(Toon)
+                // Note: Mythic data (the 0, 0) is implemented separately in RaiderConnection
+                mResponse.processBlizzard(new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
             }
         }
         else {
-            mResponse.processBattlenet(null);
+            mResponse.processBlizzard(null);
         }
     }
 }

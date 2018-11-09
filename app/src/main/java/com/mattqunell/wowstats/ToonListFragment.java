@@ -19,10 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mattqunell.wowstats.data.BattlenetAsyncResponse;
-import com.mattqunell.wowstats.data.BattlenetConnection;
-import com.mattqunell.wowstats.data.RaiderioAsyncResponse;
-import com.mattqunell.wowstats.data.RaiderioConnection;
+import com.mattqunell.wowstats.data.BlizzardAsyncResponse;
+import com.mattqunell.wowstats.data.BlizzardConnection;
+import com.mattqunell.wowstats.data.RaiderAsyncResponse;
+import com.mattqunell.wowstats.data.RaiderConnection;
 import com.mattqunell.wowstats.data.Toon;
 import com.mattqunell.wowstats.database.ToonDb;
 
@@ -37,7 +37,7 @@ import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_REQUEST_CODE;
  * Fragment that handles the RecyclerView and its components
  */
 public class ToonListFragment extends Fragment
-        implements BattlenetAsyncResponse, RaiderioAsyncResponse {
+        implements BlizzardAsyncResponse, RaiderAsyncResponse {
 
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
@@ -50,7 +50,7 @@ public class ToonListFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        // Reference to this Fragment for each instance of BattlenetConnection
+        // Reference to this Fragment for each instance of BlizzardConnection
         final ToonListFragment tlf = this;
 
         // FAB listener
@@ -101,7 +101,7 @@ public class ToonListFragment extends Fragment
             case R.id.refresh:
                 List<Toon> toons = ToonDb.get(getContext()).getToons();
                 for (Toon t : toons) {
-                    new BattlenetConnection(this).execute(t.getName(), t.getRealm());
+                    new BlizzardConnection(this).execute(t.getName(), t.getRealm());
                 }
 
             default:
@@ -116,23 +116,23 @@ public class ToonListFragment extends Fragment
             if (resultCode == RESULT_OK) {
                 String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
                 String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
-                new BattlenetConnection(this).execute(name, realm);
+                new BlizzardConnection(this).execute(name, realm);
             }
         }
     }
 
     /*
-     * Called from BattlenetConnection's onPostExecute
+     * Called from BlizzardConnection's onPostExecute
      *
-     * Toon exists, = max level: Send to RaiderioConnection for mythic data
+     * Toon exists, = max level: Send to RaiderConnection for mythic data
      * Toon exists, < max level: Add to database and update
      * Toon does not exist: Toast
      */
     @Override
-    public void processBattlenet(Toon toon) {
+    public void processBlizzard(Toon toon) {
         if (toon != null) {
-            if (toon.getLevel() == BattlenetConnection.MAX_LEVEL) {
-                new RaiderioConnection(this, toon).execute();
+            if (toon.getLevel() == BlizzardConnection.MAX_LEVEL) {
+                new RaiderConnection(this, toon).execute();
             }
             else {
                 ToonDb.get(getContext()).addToon(toon);
@@ -144,7 +144,7 @@ public class ToonListFragment extends Fragment
         }
     }
 
-    // Called from RaiderioConnection's onPostExecute if mythic data added
+    // Called from RaiderConnection's onPostExecute if mythic data added
     @Override
     public void processRaiderio(Toon toon) {
         ToonDb.get(getContext()).addToon(toon);
@@ -214,7 +214,7 @@ public class ToonListFragment extends Fragment
                     String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
 
             // Show mythic data if the Toon is max level
-            if (mToon.getLevel() == BattlenetConnection.MAX_LEVEL) {
+            if (mToon.getLevel() == BlizzardConnection.MAX_LEVEL) {
                 mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic,
                         mToon.getMythicScore(), mToon.getHighestMythic()));
             }

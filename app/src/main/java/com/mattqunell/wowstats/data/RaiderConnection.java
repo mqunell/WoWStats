@@ -17,18 +17,18 @@ import java.net.URL;
 /**
  * Accesses Raider.IO's API to retrieve Mythic Plus data about Toons.
  */
-public class RaiderioConnection extends AsyncTask<String, Void, String> {
+public class RaiderConnection extends AsyncTask<String, Void, String> {
 
-    // The class that implements RaiderioAsyncResponse and listens for onPostExecute
-    private RaiderioAsyncResponse mResponse;
+    // The class that implements RaiderAsyncResponse and listens for onPostExecute
+    private RaiderAsyncResponse mResponse;
 
     // The Toon being updated with mythic data
     private Toon mToon;
 
     // Debugging tag
-    private static final String TAG = "RaiderioConnection";
+    private static final String TAG = "RaiderConnection";
 
-    public RaiderioConnection(RaiderioAsyncResponse response, Toon toon) {
+    public RaiderConnection(RaiderAsyncResponse response, Toon toon) {
         mResponse = response;
         mToon = toon;
     }
