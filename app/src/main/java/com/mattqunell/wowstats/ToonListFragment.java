@@ -146,7 +146,7 @@ public class ToonListFragment extends Fragment
 
     // Called from RaiderConnection's onPostExecute if mythic data added
     @Override
-    public void processRaiderio(Toon toon) {
+    public void processRaider(Toon toon) {
         ToonDb.get(getContext()).addToon(toon);
         updateUi();
     }

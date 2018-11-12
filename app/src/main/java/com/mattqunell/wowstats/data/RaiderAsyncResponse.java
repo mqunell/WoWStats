@@ -6,5 +6,5 @@ package com.mattqunell.wowstats.data;
  * ToonListFragment implements this interface and overrides the method to receive data.
  */
 public interface RaiderAsyncResponse {
-    void processRaiderio(Toon toon);
+    void processRaider(Toon toon);
 }

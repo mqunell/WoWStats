@@ -101,8 +101,8 @@ public class RaiderConnection extends AsyncTask<String, Void, String> {
                 mToon.setMythicScore(score);
                 mToon.setHighestMythic(highest);
 
-                // Return the Toon to ToonListFragment.processRaiderio(Toon)
-                mResponse.processRaiderio(mToon);
+                // Return the Toon to ToonListFragment.processRaider(Toon)
+                mResponse.processRaider(mToon);
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
