@@ -7,9 +7,13 @@
     <string name="add_realm">Realm</string>
 
     <!-- ToonListFragment -->
-    <string name="level">Level %1$s</string>
-    <string name="ilevel">iLevel %1$s</string>
-    <string name="race_class">%1$s %2$s</string>
+    <string name="could_not_find">Could not find character</string>
+    <string name="adding">Adding %1$s</string>
+    <string name="refreshing">Refreshing&#8230;</string>
+    <string name="added">%1$s added</string>
+    <string name="updated">%1$s updated</string>
+
+    <!-- ToonListFragment.ToonHolder -->
     <string name="level_ilevel">%1$s / %2$s</string>
     <string name="mythicscore_highestmythic">%1$d / %2$d</string>
 

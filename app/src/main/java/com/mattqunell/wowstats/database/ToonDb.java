@@ -38,14 +38,16 @@ public class ToonDb {
     }
 
     /*
-     * Adds a new Toon or updates an existing one
+     * Adds a new Toon or updates an existing one.
+     * Returns a boolean signifying whether an existing Toon was updated.
      *
      * If the Toon already exists in the database, update the necessary info.
      * ex. update toons set level=120, itemlevel=350, mythicscore=500, highestmythic=10
      *     where name="Blyskyn" and realm="Shadowsong";
+     *
      */
-    public void addToon(Toon toon) {
-        Boolean updated = false;
+    public boolean addToon(Toon toon) {
+        boolean wasUpdated = false;
 
         // Attempt to find and update a Toon
         for (Toon t : getToons()) {
@@ -59,15 +61,17 @@ public class ToonDb {
                         ToonDbSchema.Cols.NAME, toon.getName(),
                         ToonDbSchema.Cols.REALM, toon.getRealm());
                 mDatabase.execSQL(updateSql);
-                updated = true;
+                wasUpdated = true;
             }
         }
 
         // Add the Toon if not previously found
-        if (!updated) {
+        if (!wasUpdated) {
             ContentValues values = getContentValues(toon);
             mDatabase.insert(ToonDbSchema.NAME, null, values);
         }
+
+        return wasUpdated;
     }
 
     // Gets an ArrayList of all Toons

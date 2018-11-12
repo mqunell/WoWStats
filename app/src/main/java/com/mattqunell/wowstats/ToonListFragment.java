@@ -100,6 +100,8 @@ public class ToonListFragment extends Fragment
             // Refresh - updates all Toons
             case R.id.refresh:
                 List<Toon> toons = ToonDb.get(getContext()).getToons();
+
+                Toast.makeText(getContext(), R.string.refreshing, Toast.LENGTH_SHORT).show();
                 for (Toon t : toons) {
                     new BlizzardConnection(this).execute(t.getName(), t.getRealm());
                 }
@@ -116,6 +118,9 @@ public class ToonListFragment extends Fragment
             if (resultCode == RESULT_OK) {
                 String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
                 String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
+
+                String output = getString(R.string.adding, name);
+                Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
                 new BlizzardConnection(this).execute(name, realm);
             }
         }
@@ -135,19 +140,27 @@ public class ToonListFragment extends Fragment
                 new RaiderConnection(this, toon).execute();
             }
             else {
-                ToonDb.get(getContext()).addToon(toon);
-                updateUi();
+                addProcessedToon(toon);
             }
         }
         else {
-            Toast.makeText(getContext(), "Could not find character", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.could_not_find, Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Called from RaiderConnection's onPostExecute if mythic data added
+    // Called from RaiderConnection's onPostExecute
     @Override
     public void processRaider(Toon toon) {
-        ToonDb.get(getContext()).addToon(toon);
+        addProcessedToon(toon);
+    }
+
+    // Helper method that adds/updates a processed Toon and displays the proper Toast
+    private void addProcessedToon(Toon toon) {
+        String output = !ToonDb.get(getContext()).addToon(toon) ?
+                getString(R.string.added, toon.getName()) :
+                getString(R.string.updated, toon.getName());
+
+        Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
         updateUi();
     }
 
@@ -165,6 +178,43 @@ public class ToonListFragment extends Fragment
         else {
             mAdapter.setToons(toons);
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    /**
+     * ToonAdapter: The Adapter
+     * Connects the ViewHolder and Toons by knowing how Toons and ToonDb are implemented.
+     * The overridden methods are all required and called by the RecyclerView itself.
+     */
+    private class ToonAdapter extends RecyclerView.Adapter<ToonHolder> {
+
+        private List<Toon> mToons;
+
+        public ToonAdapter(List<Toon> toons) {
+            mToons = toons;
+        }
+
+        @Override
+        public ToonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+            return new ToonHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(ToonHolder holder, int position) {
+            Toon toon = mToons.get(position);
+            holder.bind(toon);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mToons.size();
+        }
+
+        public void setToons(List<Toon> toons) {
+            mToons = toons;
         }
     }
 
@@ -284,43 +334,6 @@ public class ToonListFragment extends Fragment
             }
 
             return icon;
-        }
-    }
-
-
-    /**
-     * ToonAdapter: The Adapter
-     * Connects the ViewHolder and Toons by knowing how Toons and ToonDb are implemented.
-     * The overridden methods are all required and called by the RecyclerView itself.
-     */
-    private class ToonAdapter extends RecyclerView.Adapter<ToonHolder> {
-
-        private List<Toon> mToons;
-
-        public ToonAdapter(List<Toon> toons) {
-            mToons = toons;
-        }
-
-        @Override
-        public ToonHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
-            return new ToonHolder(layoutInflater, parent);
-        }
-
-        @Override
-        public void onBindViewHolder(ToonHolder holder, int position) {
-            Toon toon = mToons.get(position);
-            holder.bind(toon);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mToons.size();
-        }
-
-        public void setToons(List<Toon> toons) {
-            mToons = toons;
         }
     }
 }
