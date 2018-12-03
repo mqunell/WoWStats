@@ -28,6 +28,9 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
     // The class that implements BlizzardAsyncResponse and listens for onPostExecute
     private BlizzardAsyncResponse mResponse;
 
+    // The OAuth token
+    private String mToken;
+
     // Debugging tag
     private static final String TAG = "BlizzardConnection";
 
@@ -74,8 +77,9 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
         CLASSES.put(12, "Demon Hunter");
     }
 
-    public BlizzardConnection(BlizzardAsyncResponse response) {
+    public BlizzardConnection(BlizzardAsyncResponse response, String token) {
         mResponse = response;
+        mToken = token;
     }
 
     @Override
@@ -84,8 +88,7 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
         // Web address
         String fields = "items&";
         String address = "https://us.api.blizzard.com/wow/character/" + strings[1] + "/"
-                + strings[0] + "?fields=" + fields + "locale=en_US&access_token="
-                + Secret.BATTLE_TOKEN;
+                + strings[0] + "?fields=" + fields + "locale=en_US&access_token=" + mToken;
 
         String result;
 

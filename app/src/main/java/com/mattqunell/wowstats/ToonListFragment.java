@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mattqunell.wowstats.data.BlizzardAsyncResponse;
+import com.mattqunell.wowstats.data.BlizzardAuthAsyncResponse;
+import com.mattqunell.wowstats.data.BlizzardAuthConnection;
 import com.mattqunell.wowstats.data.BlizzardConnection;
 import com.mattqunell.wowstats.data.RaiderAsyncResponse;
 import com.mattqunell.wowstats.data.RaiderConnection;
@@ -37,10 +39,14 @@ import static com.mattqunell.wowstats.AddToonDialogFragment.ATDF_REQUEST_CODE;
  * Fragment that handles the RecyclerView and its components
  */
 public class ToonListFragment extends Fragment
-        implements BlizzardAsyncResponse, RaiderAsyncResponse {
+        implements BlizzardAuthAsyncResponse, BlizzardAsyncResponse, RaiderAsyncResponse {
 
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
+
+    // Temporary storage for Toon names/realms while BlizzardAuthConnection is running
+    private String tempName;
+    private String tempRealm;
 
     // Mandatory empty constructor
     public ToonListFragment() {}
@@ -103,7 +109,9 @@ public class ToonListFragment extends Fragment
 
                 Toast.makeText(getContext(), R.string.refreshing, Toast.LENGTH_SHORT).show();
                 for (Toon t : toons) {
-                    new BlizzardConnection(this).execute(t.getName(), t.getRealm());
+                    tempName = t.getName();
+                    tempRealm = t.getRealm();
+                    new BlizzardAuthConnection(this).execute();
                 }
 
             default:
@@ -116,13 +124,22 @@ public class ToonListFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ATDF_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
-                String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
+                tempName = data.getExtras().getString(ATDF_BUNDLE_NAME);
+                tempRealm = data.getExtras().getString(ATDF_BUNDLE_REALM);
 
-                String output = getString(R.string.adding, name);
+                String output = getString(R.string.adding, tempName);
                 Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
-                new BlizzardConnection(this).execute(name, realm);
+
+                new BlizzardAuthConnection(this).execute();
             }
+        }
+    }
+
+    // Called from BlizzardAuthConnection's onPostExecute
+    @Override
+    public void processBlizzardAuth(String token) {
+        if (token != null) {
+            new BlizzardConnection(this, token).execute(tempName, tempRealm);
         }
     }
 
