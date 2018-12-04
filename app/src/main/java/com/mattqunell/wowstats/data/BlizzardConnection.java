@@ -3,18 +3,10 @@ package com.mattqunell.wowstats.data;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.mattqunell.wowstats.Secret;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,42 +77,11 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        // Web address
-        String fields = "items&";
+        // API address
         String address = "https://us.api.blizzard.com/wow/character/" + strings[1] + "/"
-                + strings[0] + "?fields=" + fields + "locale=en_US&access_token=" + mToken;
+                + strings[0] + "?fields=items&locale=en_US&access_token=" + mToken;
 
-        String result;
-
-        try {
-            URL url = new URL(address);
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.connect();
-
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader br = new BufferedReader(isr);
-
-            StringBuilder sb = new StringBuilder();
-            String temp;
-            while ((temp = br.readLine()) != null) {
-                sb.append(temp);
-            }
-
-            result = sb.toString();
-        }
-        catch (MalformedURLException e) {
-            Log.e(TAG, e.toString());
-            result = "Error with URL";
-        }
-        catch (IOException e) {
-            Log.e(TAG, e.toString());
-            result = "Error with HTTP connection";
-        }
-
-        return result;
+        return GenericHttpGet.get(address);
     }
 
     @Override
@@ -140,7 +101,8 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
 
                 // Return the Toon to ToonListFragment.processBlizzard(Toon)
                 // Note: Mythic data (the 0, 0) is implemented separately in RaiderConnection
-                mResponse.processBlizzard(new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
+                mResponse.processBlizzard(
+                        new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
             }
             catch (JSONException e) {
                 Log.e(TAG, e.toString());
