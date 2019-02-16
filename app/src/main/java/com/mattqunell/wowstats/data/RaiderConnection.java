@@ -70,5 +70,6 @@ public class RaiderConnection extends AsyncTask<String, Void, String> {
                 Log.e(TAG, e.toString());
             }
         }
+        // No else case because the passed-in Toon is modified directly
     }
 }

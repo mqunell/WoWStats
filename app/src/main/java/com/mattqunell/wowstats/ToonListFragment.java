@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,9 +45,8 @@ public class ToonListFragment extends Fragment
     private RecyclerView mRecyclerView;
     private ToonAdapter mAdapter;
 
-    // Temporary storage for Toon names/realms while BlizzardAuthConnection is running
-    private String tempName;
-    private String tempRealm;
+    // The OAuth token
+    private String mAuthToken;
 
     // Mandatory empty constructor
     public ToonListFragment() {}
@@ -109,9 +109,7 @@ public class ToonListFragment extends Fragment
 
                 Toast.makeText(getContext(), R.string.refreshing, Toast.LENGTH_SHORT).show();
                 for (Toon t : toons) {
-                    tempName = t.getName();
-                    tempRealm = t.getRealm();
-                    new BlizzardAuthConnection(this).execute();
+                    new BlizzardConnection(this, mAuthToken).execute(t.getName(), t.getRealm());
                 }
 
             default:
@@ -124,13 +122,13 @@ public class ToonListFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ATDF_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                tempName = data.getExtras().getString(ATDF_BUNDLE_NAME);
-                tempRealm = data.getExtras().getString(ATDF_BUNDLE_REALM);
+                String name = data.getExtras().getString(ATDF_BUNDLE_NAME);
+                String realm = data.getExtras().getString(ATDF_BUNDLE_REALM);
 
-                String output = getString(R.string.adding, tempName);
+                String output = getString(R.string.adding, name);
                 Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
 
-                new BlizzardAuthConnection(this).execute();
+                new BlizzardConnection(this, mAuthToken).execute(name, realm);
             }
         }
     }
@@ -139,7 +137,7 @@ public class ToonListFragment extends Fragment
     @Override
     public void processBlizzardAuth(String token) {
         if (token != null) {
-            new BlizzardConnection(this, token).execute(tempName, tempRealm);
+            mAuthToken = token;
         }
     }
 
@@ -177,6 +175,7 @@ public class ToonListFragment extends Fragment
                 getString(R.string.added, toon.getName()) :
                 getString(R.string.updated, toon.getName());
 
+        Log.v("ToonListFragment", output);
         Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
         updateUi();
     }
@@ -196,6 +195,9 @@ public class ToonListFragment extends Fragment
             mAdapter.setToons(toons);
             mAdapter.notifyDataSetChanged();
         }
+
+        // Get a new auth token
+        new BlizzardAuthConnection(this).execute();
     }
 
 
