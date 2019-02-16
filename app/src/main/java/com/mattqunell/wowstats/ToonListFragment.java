@@ -112,6 +112,14 @@ public class ToonListFragment extends Fragment
                     new BlizzardConnection(this, mAuthToken).execute(t.getName(), t.getRealm());
                 }
 
+                return true;
+
+            // Customize
+            case R.id.customize:
+                startActivity(new Intent(getContext(), CustomizeActivity.class));
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -253,8 +261,8 @@ public class ToonListFragment extends Fragment
         private ImageView mClassIcon;
         private TextView mToonTopLeftOne;
         private TextView mToonTopLeftTwo;
-        private TextView mToonBottomLeft;
         private TextView mToonTopRight;
+        private TextView mToonBottomLeft;
         private TextView mToonBottomRight;
 
         public ToonHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -266,8 +274,8 @@ public class ToonListFragment extends Fragment
             mClassIcon = itemView.findViewById(R.id.class_icon);
             mToonTopLeftOne = itemView.findViewById(R.id.toon_top_left_one);
             mToonTopLeftTwo = itemView.findViewById(R.id.toon_top_left_two);
-            mToonBottomLeft = itemView.findViewById(R.id.toon_bottom_left_one);
             mToonTopRight = itemView.findViewById(R.id.toon_top_right);
+            mToonBottomLeft = itemView.findViewById(R.id.toon_bottom_left);
             mToonBottomRight = itemView.findViewById(R.id.toon_bottom_right);
         }
 
@@ -278,9 +286,9 @@ public class ToonListFragment extends Fragment
             mClassIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
             mToonTopLeftOne.setText(mToon.getName());
             mToonTopLeftTwo.setText(mToon.getRealm());
-            mToonBottomLeft.setText(mToon.getRace());
             mToonTopRight.setText(getString(R.string.level_ilevel,
                     String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
+            mToonBottomLeft.setText(mToon.getRace());
 
             // Show mythic data if the Toon is max level
             if (mToon.getLevel() == BlizzardConnection.MAX_LEVEL) {

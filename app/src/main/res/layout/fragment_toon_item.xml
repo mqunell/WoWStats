@@ -24,7 +24,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         style="@style/item_textview"
-        app:layout_constraintStart_toEndOf="@+id/class_icon"
+        app:layout_constraintStart_toEndOf="@id/class_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Blyskyn" />
 
@@ -33,32 +33,32 @@
         android:layout_marginStart="8dp"
         android:textSize="18sp"
         style="@style/item_textview"
-        app:layout_constraintStart_toEndOf="@+id/toon_top_left_one"
+        app:layout_constraintStart_toEndOf="@id/toon_top_left_one"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Shadowsong" />
 
     <TextView
-        android:id="@+id/toon_bottom_left_one"
+        android:id="@+id/toon_top_right"
+        style="@style/item_textview"
+        app:layout_constraintBottom_toBottomOf="@id/toon_top_left_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="120" />
+
+    <TextView
+        android:id="@+id/toon_bottom_left"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         style="@style/item_textview"
-        app:layout_constraintStart_toEndOf="@+id/class_icon"
-        app:layout_constraintTop_toBottomOf="@+id/toon_top_left_one"
+        app:layout_constraintStart_toEndOf="@id/class_icon"
+        app:layout_constraintTop_toBottomOf="@id/toon_top_left_one"
         tools:text="Gnome" />
-
-    <TextView
-        android:id="@+id/toon_top_right"
-        style="@style/item_textview"
-        app:layout_constraintBottom_toBottomOf="@+id/toon_top_left_two"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="120" />
 
     <TextView
         android:id="@+id/toon_bottom_right"
         android:layout_marginTop="8dp"
         style="@style/item_textview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toon_top_right"
+        app:layout_constraintTop_toBottomOf="@id/toon_top_right"
         tools:text="325" />
 
 </android.support.constraint.ConstraintLayout>

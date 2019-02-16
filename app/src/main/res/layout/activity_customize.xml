@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customize"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomizeActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_demo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@color/colorAlliance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/demo_class_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/mage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_refresh" />
+
+        <TextView
+            android:id="@+id/demo_tl1"
+            style="@style/item_textview"
+            android:layout_marginStart="8dp"
+            android:text="Top Left 1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/demo_class_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/demo_tl2"
+            style="@style/item_textview"
+            android:layout_marginStart="8dp"
+            android:text="Top Left 2"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/demo_tl1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/demo_tr"
+            style="@style/item_textview"
+            android:text="Top Right"
+            app:layout_constraintBottom_toBottomOf="@id/demo_tl2"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/demo_bl"
+            style="@style/item_textview"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Bottom Left"
+            app:layout_constraintStart_toEndOf="@id/demo_class_icon"
+            app:layout_constraintTop_toBottomOf="@id/demo_tl1" />
+
+        <TextView
+            android:id="@+id/demo_br"
+            style="@style/item_textview"
+            android:layout_marginTop="8dp"
+            android:text="Bottom Right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/demo_tr" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_tl1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_demo"
+        style="@style/customize_constraint" >
+
+        <TextView
+            android:id="@+id/label_tl1"
+            android:text="Top Left 1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customize_textview" />
+
+        <Spinner
+            android:id="@+id/tl1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tl1"
+            style="@style/customize_spinner" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_tl2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_tl1"
+        style="@style/customize_constraint" >
+
+        <TextView
+            android:id="@+id/label_tl2"
+            android:text="Top Left 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customize_textview" />
+
+        <Spinner
+            android:id="@+id/tl2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tl2"
+            style="@style/customize_spinner" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_tr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_tl2"
+        style="@style/customize_constraint" >
+
+        <TextView
+            android:id="@+id/label_tr"
+            android:text="Top Right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customize_textview" />
+
+        <Spinner
+            android:id="@+id/tr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_tr"
+            style="@style/customize_spinner" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_bl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_tr"
+        style="@style/customize_constraint" >
+
+        <TextView
+            android:id="@+id/label_bl"
+            android:text="Bottom Left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customize_textview" />
+
+        <Spinner
+            android:id="@+id/bl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_bl"
+            style="@style/customize_spinner" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_br"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_bl"
+        style="@style/customize_constraint" >
+
+        <TextView
+            android:id="@+id/label_br"
+            android:text="Bottom Right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customize_textview" />
+
+        <Spinner
+            android:id="@+id/br"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_br"
+            style="@style/customize_spinner" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

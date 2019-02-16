@@ -38,4 +38,27 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!-- activity_customize's ConstraintLayouts -->
+    <style name="customize_constraint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <!-- activity_customize's TextViews -->
+    <style name="customize_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- activity_customize's Spinners -->
+    <style name="customize_spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
 </resources>

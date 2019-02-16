@@ -19,4 +19,19 @@
 
     <!-- ToonDb -->
     <string name="sql_update">update %1$s set %2$s=%3$d, %4$s=%5$d, %6$s=%7$d, %8$s=%9$d where %10$s=\"%11$s\" and %12$s=\"%13$s\";</string>
+
+    <!-- menu_main -->
+    <string name="refresh">Refresh</string>
+    <string name="customize">Customize</string>
+
+    <!-- activity_customize -->
+    <string-array name="spinner_options">
+        <item>Class</item>
+        <item>Faction</item>
+        <item>Level/iLevel</item>
+        <item>Mythic+</item>
+        <item>Name</item>
+        <item>Race</item>
+        <item>Realm</item>
+    </string-array>
 </resources>
