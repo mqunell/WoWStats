@@ -17,6 +17,9 @@ import com.mattqunell.wowstats.R;
 import com.mattqunell.wowstats.data.BlizzardConnection;
 import com.mattqunell.wowstats.data.Toon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ToonHolder: The ViewHolder
  * Inflates and owns each individual layout (fragment_toon_item) within the RecyclerView.
@@ -98,164 +101,59 @@ public class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickL
                 mParentFragment.getString(R.string.app_name), Context.MODE_PRIVATE)
                 .getString(sharedPrefsKey, "");
 
-        String output;
-        switch (sharedPrefsValue) {
-            case "Class":
-                output = mToon.get_Class();
-                break;
+        Map<String, String> output = new HashMap<>();
+        output.put("Class", mToon.get_Class());
+        output.put("Faction", mToon.getFaction() == 0 ? "Alliance" : "Horde");
+        output.put("Level/iLevel", mParentFragment.getString(R.string.level_ilevel,
+                String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
+        output.put("Mythic+", mToon.getLevel() == BlizzardConnection.MAX_LEVEL ?
+                mParentFragment.getString(R.string.mythicscore_highestmythic, mToon.getMythicScore(), mToon.getHighestMythic()) : "Not max level");
+        output.put("Name", mToon.getName());
+        output.put("Race", mToon.getRace());
+        output.put("Realm", mToon.getRealm());
 
-            case "Faction":
-                output = mToon.getFaction() == 0 ? "Alliance" : "Horde";
-                break;
-
-            case "Level/iLevel":
-                output = mParentFragment.getString(R.string.level_ilevel,
-                        String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel()));
-                break;
-
-            case "Mythic+":
-                if (mToon.getLevel() == BlizzardConnection.MAX_LEVEL) {
-                    output = mParentFragment.getString(R.string.mythicscore_highestmythic,
-                            mToon.getMythicScore(), mToon.getHighestMythic());
-                }
-                else {
-                    output = "Not max level";
-                }
-                break;
-
-            case "Name":
-                output = mToon.getName();
-                break;
-
-            case "Race":
-                output = mToon.getRace();
-                break;
-
-            case "Realm":
-                output = mToon.getRealm();
-                break;
-
-            default:
-                output = "";
-                break;
-        }
-
-        return output;
+        return output.get(sharedPrefsValue);
     }
 
     // Helper method that gets the correct Drawable based on the Toon's class
     private Drawable getClassIcon(String _class) {
-        Drawable icon = null;
         Resources res = mParentFragment.getResources();
 
-        switch (_class) {
-            case "Death Knight":
-                icon = res.getDrawable(R.drawable.death_knight);
-                break;
+        Map<String, Drawable> icons = new HashMap<>();
+        icons.put("Death Knight", res.getDrawable(R.drawable.death_knight));
+        icons.put("Demon Hunter", res.getDrawable(R.drawable.demon_hunter));
+        icons.put("Druid", res.getDrawable(R.drawable.druid));
+        icons.put("Hunter", res.getDrawable(R.drawable.hunter));
+        icons.put("Mage", res.getDrawable(R.drawable.mage));
+        icons.put("Monk", res.getDrawable(R.drawable.monk));
+        icons.put("Paladin", res.getDrawable(R.drawable.paladin));
+        icons.put("Priest", res.getDrawable(R.drawable.priest));
+        icons.put("Rogue", res.getDrawable(R.drawable.rogue));
+        icons.put("Shaman", res.getDrawable(R.drawable.shaman));
+        icons.put("Warlock", res.getDrawable(R.drawable.warlock));
+        icons.put("Warrior", res.getDrawable(R.drawable.warrior));
 
-            case "Demon Hunter":
-                icon = res.getDrawable(R.drawable.demon_hunter);
-                break;
-
-            case "Druid":
-                icon = res.getDrawable(R.drawable.druid);
-                break;
-
-            case "Hunter":
-                icon = res.getDrawable(R.drawable.hunter);
-                break;
-
-            case "Mage":
-                icon = res.getDrawable(R.drawable.mage);
-                break;
-
-            case "Monk":
-                icon = res.getDrawable(R.drawable.monk);
-                break;
-
-            case "Paladin":
-                icon = res.getDrawable(R.drawable.paladin);
-                break;
-
-            case "Priest":
-                icon = res.getDrawable(R.drawable.priest);
-                break;
-
-            case "Rogue":
-                icon = res.getDrawable(R.drawable.rogue);
-                break;
-
-            case "Shaman":
-                icon = res.getDrawable(R.drawable.shaman);
-                break;
-
-            case "Warlock":
-                icon = res.getDrawable(R.drawable.warlock);
-                break;
-
-            case "Warrior":
-                icon = res.getDrawable(R.drawable.warrior);
-                break;
-        }
-
-        return icon;
+        return icons.get(_class);
     }
 
     // Helper method that gets the correct Color (int) based on the Toon's class
     private int getClassColor(String _class) {
-        int color = -1;
         Resources res = mParentFragment.getResources();
 
-        switch (_class) {
-            case "Death Knight":
-                color = res.getColor(R.color.death_knight);
-                break;
+        Map<String, Integer> colors = new HashMap<>();
+        colors.put("Death Knight", res.getColor(R.color.death_knight));
+        colors.put("Demon Hunter", res.getColor(R.color.demon_hunter));
+        colors.put("Druid", res.getColor(R.color.druid));
+        colors.put("Hunter", res.getColor(R.color.hunter));
+        colors.put("Mage", res.getColor(R.color.mage));
+        colors.put("Monk", res.getColor(R.color.monk));
+        colors.put("Paladin", res.getColor(R.color.paladin));
+        colors.put("Priest", res.getColor(R.color.priest));
+        colors.put("Rogue", res.getColor(R.color.rogue));
+        colors.put("Shaman", res.getColor(R.color.shaman));
+        colors.put("Warlock", res.getColor(R.color.warlock));
+        colors.put("Warrior", res.getColor(R.color.warrior));
 
-            case "Demon Hunter":
-                color = res.getColor(R.color.demon_hunter);
-                break;
-
-            case "Druid":
-                color = res.getColor(R.color.druid);
-                break;
-
-            case "Hunter":
-                color = res.getColor(R.color.hunter);
-                break;
-
-            case "Mage":
-                color = res.getColor(R.color.mage);
-                break;
-
-            case "Monk":
-                color = res.getColor(R.color.monk);
-                break;
-
-            case "Paladin":
-                color = res.getColor(R.color.paladin);
-                break;
-
-            case "Priest":
-                color = res.getColor(R.color.priest);
-                break;
-
-            case "Rogue":
-                color = res.getColor(R.color.rogue);
-                break;
-
-            case "Shaman":
-                color = res.getColor(R.color.shaman);
-                break;
-
-            case "Warlock":
-                color = res.getColor(R.color.warlock);
-                break;
-
-            case "Warrior":
-                color = res.getColor(R.color.warrior);
-                break;
-        }
-
-        return color;
+        return colors.get(_class);
     }
 }

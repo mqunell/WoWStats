@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/demo_class_icon"
+            android:id="@+id/demo_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/mage"
@@ -35,7 +35,7 @@
             android:text="Top Left 1"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/demo_class_icon"
+            app:layout_constraintStart_toEndOf="@id/demo_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Bottom Left"
-            app:layout_constraintStart_toEndOf="@id/demo_class_icon"
+            app:layout_constraintStart_toEndOf="@id/demo_icon"
             app:layout_constraintTop_toBottomOf="@id/demo_tl1" />
 
         <TextView
