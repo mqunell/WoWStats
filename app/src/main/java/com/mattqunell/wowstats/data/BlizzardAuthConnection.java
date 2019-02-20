@@ -17,9 +17,6 @@ public class BlizzardAuthConnection extends AsyncTask<String, Void, String> {
     // The class that implements BlizzardAsyncResponse and listens for onPostExecute
     private BlizzardAuthAsyncResponse mResponse;
 
-    // Debugging tag
-    private static final String TAG = "BlizzardAuthConnection";
-
     public BlizzardAuthConnection(BlizzardAuthAsyncResponse response) {
         mResponse = response;
     }
@@ -48,7 +45,7 @@ public class BlizzardAuthConnection extends AsyncTask<String, Void, String> {
                 mResponse.processBlizzardAuth(token);
             }
             catch (JSONException e) {
-                Log.e(TAG, e.toString());
+                Log.e("BlizzardAuthConnection", e.toString());
             }
         }
         else {

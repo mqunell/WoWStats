@@ -18,24 +18,9 @@ public class ToonListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.container);
 
-        // Initializes the SharedPreferences with default values
-        SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!sharedPrefs.contains("initialized")) {
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-
-            editor.putBoolean("initialized", true);
-            editor.putString(CustomizeActivity.TOP_LEFT_ONE, "Name");
-            editor.putString(CustomizeActivity.TOP_LEFT_TWO, "Realm");
-            editor.putString(CustomizeActivity.TOP_RIGHT, "Level/iLevel");
-            editor.putString(CustomizeActivity.BOTTOM_LEFT, "Race");
-            editor.putString(CustomizeActivity.BOTTOM_RIGHT, "Mythic+");
-            editor.putBoolean(CustomizeActivity.FLIPPED_COLORS, false);
-
-            editor.apply();
-        }
+        initSharedPrefs();
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);
@@ -51,6 +36,26 @@ public class ToonListActivity extends AppCompatActivity {
             fm.beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
+        }
+    }
+
+    // Initializes the customization SharedPreferences with default values
+    private void initSharedPrefs() {
+        SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.app_name),
+                Context.MODE_PRIVATE);
+
+        if (!sharedPrefs.contains("initialized")) {
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+
+            editor.putBoolean("initialized", true);
+            editor.putString(CustomizeActivity.TOP_LEFT_ONE, "Name");
+            editor.putString(CustomizeActivity.TOP_LEFT_TWO, "Realm");
+            editor.putString(CustomizeActivity.TOP_RIGHT, "Level/iLevel");
+            editor.putString(CustomizeActivity.BOTTOM_LEFT, "Race");
+            editor.putString(CustomizeActivity.BOTTOM_RIGHT, "Mythic+");
+            editor.putBoolean(CustomizeActivity.FLIPPED_COLORS, false);
+
+            editor.apply();
         }
     }
 }

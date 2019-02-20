@@ -55,9 +55,6 @@ public class ToonListFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        // Reference to this Fragment for each instance of BlizzardConnection
-        final ToonListFragment tlf = this;
-
         // FAB listener
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_toon);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +63,7 @@ public class ToonListFragment extends Fragment
 
                 // Create the DialogFragment and set this as the target for onActivityResult(...)
                 DialogFragment fragment = new AddToonDialogFragment();
-                fragment.setTargetFragment(tlf, ATDF_REQUEST_CODE);
+                fragment.setTargetFragment(ToonListFragment.this, ATDF_REQUEST_CODE);
                 fragment.show(getActivity().getSupportFragmentManager(), "Add Character");
             }
         });
@@ -74,8 +71,6 @@ public class ToonListFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle inState) {
-
-        // Inflate the layout file
         View view = inflater.inflate(R.layout.fragment_toon_list, container, false);
 
         mRecyclerView = view.findViewById(R.id.toon_list);
@@ -116,7 +111,6 @@ public class ToonListFragment extends Fragment
             // Customize
             case R.id.customize:
                 startActivity(new Intent(getContext(), CustomizeActivity.class));
-
                 return true;
 
             default:
@@ -182,15 +176,12 @@ public class ToonListFragment extends Fragment
                 getString(R.string.added, toon.getName()) :
                 getString(R.string.updated, toon.getName());
 
-        Log.v("ToonListFragment", output);
         Toast.makeText(getContext(), output, Toast.LENGTH_SHORT).show();
         updateUi();
     }
 
-    // Helper method that creates/sets or updates the Adapter
+    // Helper method that creates/sets or updates the Adapter and gets an OAuth token
     private void updateUi() {
-
-        // Get the list of Toons
         List<Toon> toons = ToonDb.get(getActivity()).getToons();
 
         // Create/refresh the adapter

@@ -18,9 +18,6 @@ public class RaiderConnection extends AsyncTask<String, Void, String> {
     // The Toon being updated with mythic data
     private Toon mToon;
 
-    // Debugging tag
-    private static final String TAG = "RaiderConnection";
-
     public RaiderConnection(RaiderAsyncResponse response, Toon toon) {
         mResponse = response;
         mToon = toon;
@@ -67,7 +64,7 @@ public class RaiderConnection extends AsyncTask<String, Void, String> {
                 mResponse.processRaider(mToon);
             }
             catch (JSONException e) {
-                Log.e(TAG, e.toString());
+                Log.e("RaiderConnection", e.toString());
             }
         }
         // No else case because the passed-in Toon is modified directly

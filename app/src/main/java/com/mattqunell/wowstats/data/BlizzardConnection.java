@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class BlizzardConnection extends AsyncTask<String, Void, String> {
 
+    // The current max level in WoW
     public static final int MAX_LEVEL = 120;
 
     // The class that implements BlizzardAsyncResponse and listens for onPostExecute
@@ -22,9 +23,6 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
 
     // The OAuth token
     private String mToken;
-
-    // Debugging tag
-    private static final String TAG = "BlizzardConnection";
 
     // Blizzard stores each toon's race and class as ints. These Maps are used to convert these ints
     // to their respective Strings
@@ -105,7 +103,7 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
                         new Toon(name, realm, faction, race, _class, level, itemLevel, 0, 0));
             }
             catch (JSONException e) {
-                Log.e(TAG, e.toString());
+                Log.e("BlizzardConnection", e.toString());
             }
         }
         else {

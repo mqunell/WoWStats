@@ -1,6 +1,7 @@
 package com.mattqunell.wowstats;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 public class CustomizeActivity extends AppCompatActivity {
+
+    // Reference the SharedPreferences and Resources directly to reduce and simplify overall code
+    private SharedPreferences mSharedPrefs;
 
     // SharedPreferences keys
     public static final String TOP_LEFT_ONE = "top_left_one",
@@ -25,6 +29,8 @@ public class CustomizeActivity extends AppCompatActivity {
         super.onCreate(inState);
         setContentView(R.layout.activity_customize);
 
+        mSharedPrefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
         // Spinners
         initializeSpinner((Spinner) findViewById(R.id.tl1), TOP_LEFT_ONE);
         initializeSpinner((Spinner) findViewById(R.id.tl2), TOP_LEFT_TWO);
@@ -33,23 +39,10 @@ public class CustomizeActivity extends AppCompatActivity {
         initializeSpinner((Spinner) findViewById(R.id.br), BOTTOM_RIGHT);
 
         // Switch
-        Switch toggleColors = findViewById(R.id.switch_toggle);
-
-        Boolean toggled = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-                .getBoolean(FLIPPED_COLORS, false);
-        toggleColors.setChecked(toggled);
-
-        toggleColors.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-                        .edit()
-                        .putBoolean(FLIPPED_COLORS, isChecked)
-                        .apply();
-            }
-        });
+        initializeSwitch((Switch) findViewById(R.id.switch_toggle));
     }
 
+    // Initializes a Spinner
     private void initializeSpinner(Spinner spinner, final String sharedPrefsKey) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.spinner_options, android.R.layout.simple_spinner_item);
@@ -57,9 +50,8 @@ public class CustomizeActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        // Set the Spinner to display the currently-selected option
-        String current = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-                .getString(sharedPrefsKey, "");
+        // Set the Spinner to display the pre-selected option
+        String current = mSharedPrefs.getString(sharedPrefsKey, "");
 
         final String[] spinnerOptions = getResources().getStringArray(R.array.spinner_options);
         int index = -1;
@@ -70,20 +62,32 @@ public class CustomizeActivity extends AppCompatActivity {
         }
         spinner.setSelection(index);
 
+        // Listener; saves the selection to SharedPreferences
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = spinnerOptions[position];
-
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-                        .edit()
-                        .putString(sharedPrefsKey, selected)
-                        .apply();
+                mSharedPrefs.edit().putString(sharedPrefsKey, spinnerOptions[position]).apply();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Intentionally left blank
+            }
+        });
+    }
+
+    private void initializeSwitch(Switch toggleColors) {
+
+        // Set the Switch to display the current toggled status
+        Boolean toggled = mSharedPrefs.getBoolean(FLIPPED_COLORS, false);
+
+        toggleColors.setChecked(toggled);
+
+        // Listener; saves the toggled status to SharedPreferences
+        toggleColors.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mSharedPrefs.edit().putBoolean(FLIPPED_COLORS, isChecked).apply();
             }
         });
     }
