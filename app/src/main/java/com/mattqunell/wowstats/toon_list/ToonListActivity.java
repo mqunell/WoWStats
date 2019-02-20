@@ -1,4 +1,4 @@
-package com.mattqunell.wowstats;
+package com.mattqunell.wowstats.toon_list;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.mattqunell.wowstats.CustomizeActivity;
+import com.mattqunell.wowstats.R;
 
 /**
  * Starts ToonListFragment.
