@@ -17,7 +17,8 @@ public class CustomizeActivity extends AppCompatActivity {
             TOP_LEFT_TWO = "top_left_two",
             TOP_RIGHT = "top_right",
             BOTTOM_LEFT = "bottom_left",
-            BOTTOM_RIGHT = "bottom_right";
+            BOTTOM_RIGHT = "bottom_right",
+            FLIPPED_COLORS = "flipped_colors";
 
     @Override
     protected void onCreate(Bundle inState) {
@@ -32,12 +33,19 @@ public class CustomizeActivity extends AppCompatActivity {
         initializeSpinner((Spinner) findViewById(R.id.br), BOTTOM_RIGHT);
 
         // Switch
-        Switch toggle = findViewById(R.id.switch_toggle);
-        //toggle.setChecked(); todo
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch toggleColors = findViewById(R.id.switch_toggle);
+
+        Boolean toggled = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                .getBoolean(FLIPPED_COLORS, false);
+        toggleColors.setChecked(toggled);
+
+        toggleColors.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //todo
+                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                        .edit()
+                        .putBoolean(FLIPPED_COLORS, isChecked)
+                        .apply();
             }
         });
     }

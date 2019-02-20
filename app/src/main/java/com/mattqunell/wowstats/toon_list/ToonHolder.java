@@ -32,7 +32,7 @@ public class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     // UI elements
     private ConstraintLayout mLayout;
-    private ImageView mClassIcon;
+    private ImageView mIcon;
     private TextView mToonTopLeftOne;
     private TextView mToonTopLeftTwo;
     private TextView mToonTopRight;
@@ -47,7 +47,7 @@ public class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
         // UI elements
         mLayout = itemView.findViewById(R.id.toon_item);
-        mClassIcon = itemView.findViewById(R.id.class_icon);
+        mIcon = itemView.findViewById(R.id.icon);
         mToonTopLeftOne = itemView.findViewById(R.id.toon_top_left_one);
         mToonTopLeftTwo = itemView.findViewById(R.id.toon_top_left_two);
         mToonTopRight = itemView.findViewById(R.id.toon_top_right);
@@ -66,13 +66,25 @@ public class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickL
         mToonBottomLeft.setText(getOutput(CustomizeActivity.BOTTOM_LEFT));
         mToonBottomRight.setText(getOutput(CustomizeActivity.BOTTOM_RIGHT));
 
-        // Set the ImageView
-        mClassIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
+        // Set the ImageView and background color
+        Boolean flippedColors = mParentFragment.getContext().getSharedPreferences(
+                mParentFragment.getString(R.string.app_name), Context.MODE_PRIVATE)
+                .getBoolean(CustomizeActivity.FLIPPED_COLORS, false);
 
-        // Set background color based on faction
-        mLayout.setBackgroundColor(mToon.getFaction() == 0 ?
-                mParentFragment.getResources().getColor(R.color.colorAlliance) :
-                mParentFragment.getResources().getColor(R.color.colorHorde));
+        if (!flippedColors) {
+            mIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
+
+            mLayout.setBackgroundColor(mToon.getFaction() == 0 ?
+                    mParentFragment.getResources().getColor(R.color.alliance) :
+                    mParentFragment.getResources().getColor(R.color.horde));
+        }
+        else {
+            mIcon.setImageDrawable(mToon.getFaction() == 0 ?
+                    mParentFragment.getResources().getDrawable(R.drawable.alliance) :
+                    mParentFragment.getResources().getDrawable(R.drawable.horde));
+
+            mLayout.setBackgroundColor(getClassColor(mToon.get_Class()));
+        }
     }
 
     @Override
@@ -187,5 +199,63 @@ public class ToonHolder extends RecyclerView.ViewHolder implements View.OnClickL
         }
 
         return icon;
+    }
+
+    // Helper method that gets the correct Color (int) based on the Toon's class
+    private int getClassColor(String _class) {
+        int color = -1;
+        Resources res = mParentFragment.getResources();
+
+        switch (_class) {
+            case "Death Knight":
+                color = res.getColor(R.color.death_knight);
+                break;
+
+            case "Demon Hunter":
+                color = res.getColor(R.color.demon_hunter);
+                break;
+
+            case "Druid":
+                color = res.getColor(R.color.druid);
+                break;
+
+            case "Hunter":
+                color = res.getColor(R.color.hunter);
+                break;
+
+            case "Mage":
+                color = res.getColor(R.color.mage);
+                break;
+
+            case "Monk":
+                color = res.getColor(R.color.monk);
+                break;
+
+            case "Paladin":
+                color = res.getColor(R.color.paladin);
+                break;
+
+            case "Priest":
+                color = res.getColor(R.color.priest);
+                break;
+
+            case "Rogue":
+                color = res.getColor(R.color.rogue);
+                break;
+
+            case "Shaman":
+                color = res.getColor(R.color.shaman);
+                break;
+
+            case "Warlock":
+                color = res.getColor(R.color.warlock);
+                break;
+
+            case "Warrior":
+                color = res.getColor(R.color.warrior);
+                break;
+        }
+
+        return color;
     }
 }

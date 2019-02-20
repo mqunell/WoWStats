@@ -32,6 +32,7 @@ public class ToonListActivity extends AppCompatActivity {
             editor.putString(CustomizeActivity.TOP_RIGHT, "Level/iLevel");
             editor.putString(CustomizeActivity.BOTTOM_LEFT, "Race");
             editor.putString(CustomizeActivity.BOTTOM_RIGHT, "Mythic+");
+            editor.putBoolean(CustomizeActivity.FLIPPED_COLORS, false);
 
             editor.apply();
         }
