@@ -1,58 +1,76 @@
 package com.mattqunell.wowstats;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 public class CustomizeActivity extends AppCompatActivity {
 
-    // UI elements
-    /*private Spinner mTopLeftOne;
-    private Spinner mTopLeftTwo;
-    private Spinner mTopRight;
-    private Spinner mBottomLeft;
-    private Spinner mBottomRight;*/
+    // SharedPreferences keys
+    public static final String TOP_LEFT_ONE = "top_left_one",
+            TOP_LEFT_TWO = "top_left_two",
+            TOP_RIGHT = "top_right",
+            BOTTOM_LEFT = "bottom_left",
+            BOTTOM_RIGHT = "bottom_right";
 
     @Override
     protected void onCreate(Bundle inState) {
         super.onCreate(inState);
         setContentView(R.layout.activity_customize);
 
-        Spinner[] spinners = new Spinner[5];
-        spinners[0] = findViewById(R.id.tl1);
-        spinners[1] = findViewById(R.id.tl2);
-        spinners[2] = findViewById(R.id.tr);
-        spinners[3] = findViewById(R.id.bl);
-        spinners[4] = findViewById(R.id.br);
+        // Spinners
+        initializeSpinner((Spinner) findViewById(R.id.tl1), TOP_LEFT_ONE);
+        initializeSpinner((Spinner) findViewById(R.id.tl2), TOP_LEFT_TWO);
+        initializeSpinner((Spinner) findViewById(R.id.tr), TOP_RIGHT);
+        initializeSpinner((Spinner) findViewById(R.id.bl), BOTTOM_LEFT);
+        initializeSpinner((Spinner) findViewById(R.id.br), BOTTOM_RIGHT);
 
-        for (Spinner s : spinners) {
-            initializeSpinner(s);
-        }
-
-        /*mTopLeftOne = findViewById(R.id.tl1);
-        mTopLeftTwo = findViewById(R.id.tl2);
-        mTopRight = findViewById(R.id.tr);
-        mBottomLeft = findViewById(R.id.bl);
-        mBottomRight = findViewById(R.id.br);*/
+        // Switch
+        Switch toggle = findViewById(R.id.switch_toggle);
+        //toggle.setChecked(); todo
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //todo
+            }
+        });
     }
 
-    private void initializeSpinner(Spinner spinner) {
+    private void initializeSpinner(Spinner spinner, final String sharedPrefsKey) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.spinner_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
 
-        // todo check shared prefs for default value
-        spinner.setSelection(0);
+        // Set the Spinner to display the currently-selected option
+        String current = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                .getString(sharedPrefsKey, "");
+
+        final String[] spinnerOptions = getResources().getStringArray(R.array.spinner_options);
+        int index = -1;
+        for (int i = 0; i < spinnerOptions.length; i++) {
+            if (spinnerOptions[i].equals(current)) {
+                index = i;
+            }
+        }
+        spinner.setSelection(index);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // todo save choice to shared prefs
+                String selected = spinnerOptions[position];
+
+                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                        .edit()
+                        .putString(sharedPrefsKey, selected)
+                        .apply();
             }
 
             @Override

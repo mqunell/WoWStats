@@ -1,5 +1,7 @@
 package com.mattqunell.wowstats;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,21 @@ public class ToonListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.container);
+
+        // Initializes the SharedPreferences with default values
+        SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedPrefs.contains("initialized")) {
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+
+            editor.putBoolean("initialized", true);
+            editor.putString(CustomizeActivity.TOP_LEFT_ONE, "Name");
+            editor.putString(CustomizeActivity.TOP_LEFT_TWO, "Realm");
+            editor.putString(CustomizeActivity.TOP_RIGHT, "Level/iLevel");
+            editor.putString(CustomizeActivity.BOTTOM_LEFT, "Race");
+            editor.putString(CustomizeActivity.BOTTOM_RIGHT, "Mythic+");
+
+            editor.apply();
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);

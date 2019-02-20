@@ -1,5 +1,6 @@
 package com.mattqunell.wowstats;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -283,23 +284,70 @@ public class ToonListFragment extends Fragment
         public void bind(Toon toon) {
             mToon = toon;
 
-            mClassIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
-            mToonTopLeftOne.setText(mToon.getName());
-            mToonTopLeftTwo.setText(mToon.getRealm());
-            mToonTopRight.setText(getString(R.string.level_ilevel,
-                    String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel())));
-            mToonBottomLeft.setText(mToon.getRace());
+            // Set the TextViews
+            mToonTopLeftOne.setText(getOutput(CustomizeActivity.TOP_LEFT_ONE));
+            mToonTopLeftTwo.setText(getOutput(CustomizeActivity.TOP_LEFT_TWO));
+            mToonTopRight.setText(getOutput(CustomizeActivity.TOP_RIGHT));
+            mToonBottomLeft.setText(getOutput(CustomizeActivity.BOTTOM_LEFT));
+            mToonBottomRight.setText(getOutput(CustomizeActivity.BOTTOM_RIGHT));
 
-            // Show mythic data if the Toon is max level
-            if (mToon.getLevel() == BlizzardConnection.MAX_LEVEL) {
-                mToonBottomRight.setText(getString(R.string.mythicscore_highestmythic,
-                        mToon.getMythicScore(), mToon.getHighestMythic()));
-            }
+            // Set the ImageView
+            mClassIcon.setImageDrawable(getClassIcon(mToon.get_Class()));
 
             // Set background color based on faction
             mLayout.setBackgroundColor(mToon.getFaction() == 0 ?
                     getResources().getColor(R.color.colorAlliance) :
                     getResources().getColor(R.color.colorHorde));
+        }
+
+        // Helper method that gets the appropriate output based on SharedPreferences data
+        private String getOutput(String sharedPrefsKey) {
+            String sharedPrefsValue = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                    .getString(sharedPrefsKey, "");
+
+            String output;
+            switch (sharedPrefsValue) {
+                case "Class":
+                    output = mToon.get_Class();
+                    break;
+
+                case "Faction":
+                    output = mToon.getFaction() == 0 ? "Alliance" : "Horde";
+                    break;
+
+                case "Level/iLevel":
+                    output = getString(R.string.level_ilevel,
+                            String.valueOf(mToon.getLevel()), String.valueOf(mToon.getItemLevel()));
+                    break;
+
+                case "Mythic+":
+                    if (mToon.getLevel() == BlizzardConnection.MAX_LEVEL) {
+                        output = getString(R.string.mythicscore_highestmythic,
+                                mToon.getMythicScore(), mToon.getHighestMythic());
+                    }
+                    else {
+                        output = "Not max level";
+                    }
+                    break;
+
+                case "Name":
+                    output = mToon.getName();
+                    break;
+
+                case "Race":
+                    output = mToon.getRace();
+                    break;
+
+                case "Realm":
+                    output = mToon.getRealm();
+                    break;
+
+                default:
+                    output = "";
+                    break;
+            }
+
+            return output;
         }
 
         @Override

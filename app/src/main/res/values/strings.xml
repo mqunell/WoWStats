@@ -33,5 +33,6 @@
         <item>Name</item>
         <item>Race</item>
         <item>Realm</item>
+        <item>--Empty--</item>
     </string-array>
 </resources>
