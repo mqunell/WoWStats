@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mattqunell.wowstats.CustomizeActivity;
 import com.mattqunell.wowstats.R;
+import com.mattqunell.wowstats.ToonFormatter;
 
 /**
  * Starts ToonListFragment.
@@ -48,12 +48,12 @@ public class ToonListActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPrefs.edit();
 
             editor.putBoolean("initialized", true);
-            editor.putString(CustomizeActivity.TOP_LEFT_ONE, "Name");
-            editor.putString(CustomizeActivity.TOP_LEFT_TWO, "Realm");
-            editor.putString(CustomizeActivity.TOP_RIGHT, "Level/iLevel");
-            editor.putString(CustomizeActivity.BOTTOM_LEFT, "Race");
-            editor.putString(CustomizeActivity.BOTTOM_RIGHT, "Mythic+");
-            editor.putBoolean(CustomizeActivity.FLIPPED_COLORS, false);
+            editor.putString(ToonFormatter.TOP_LEFT_ONE, "Name");
+            editor.putString(ToonFormatter.TOP_LEFT_TWO, "Realm");
+            editor.putString(ToonFormatter.TOP_RIGHT, "Level/iLevel");
+            editor.putString(ToonFormatter.BOTTOM_LEFT, "Race");
+            editor.putString(ToonFormatter.BOTTOM_RIGHT, "Mythic+");
+            editor.putBoolean(ToonFormatter.FLIPPED_COLORS, false);
 
             editor.apply();
         }

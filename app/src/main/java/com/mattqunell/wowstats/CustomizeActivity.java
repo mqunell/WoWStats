@@ -16,14 +16,6 @@ public class CustomizeActivity extends AppCompatActivity {
     // Reference the SharedPreferences and Resources directly to reduce and simplify overall code
     private SharedPreferences mSharedPrefs;
 
-    // SharedPreferences keys
-    public static final String TOP_LEFT_ONE = "top_left_one",
-            TOP_LEFT_TWO = "top_left_two",
-            TOP_RIGHT = "top_right",
-            BOTTOM_LEFT = "bottom_left",
-            BOTTOM_RIGHT = "bottom_right",
-            FLIPPED_COLORS = "flipped_colors";
-
     @Override
     protected void onCreate(Bundle inState) {
         super.onCreate(inState);
@@ -32,11 +24,11 @@ public class CustomizeActivity extends AppCompatActivity {
         mSharedPrefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
 
         // Spinners
-        initializeSpinner((Spinner) findViewById(R.id.tl1), TOP_LEFT_ONE);
-        initializeSpinner((Spinner) findViewById(R.id.tl2), TOP_LEFT_TWO);
-        initializeSpinner((Spinner) findViewById(R.id.tr), TOP_RIGHT);
-        initializeSpinner((Spinner) findViewById(R.id.bl), BOTTOM_LEFT);
-        initializeSpinner((Spinner) findViewById(R.id.br), BOTTOM_RIGHT);
+        initializeSpinner((Spinner) findViewById(R.id.tl1), ToonFormatter.TOP_LEFT_ONE);
+        initializeSpinner((Spinner) findViewById(R.id.tl2), ToonFormatter.TOP_LEFT_TWO);
+        initializeSpinner((Spinner) findViewById(R.id.tr), ToonFormatter.TOP_RIGHT);
+        initializeSpinner((Spinner) findViewById(R.id.bl), ToonFormatter.BOTTOM_LEFT);
+        initializeSpinner((Spinner) findViewById(R.id.br), ToonFormatter.BOTTOM_RIGHT);
 
         // Switch
         initializeSwitch((Switch) findViewById(R.id.switch_toggle));
@@ -79,7 +71,7 @@ public class CustomizeActivity extends AppCompatActivity {
     private void initializeSwitch(Switch toggleColors) {
 
         // Set the Switch to display the current toggled status
-        Boolean toggled = mSharedPrefs.getBoolean(FLIPPED_COLORS, false);
+        Boolean toggled = mSharedPrefs.getBoolean(ToonFormatter.FLIPPED_COLORS, false);
 
         toggleColors.setChecked(toggled);
 
@@ -87,7 +79,7 @@ public class CustomizeActivity extends AppCompatActivity {
         toggleColors.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mSharedPrefs.edit().putBoolean(FLIPPED_COLORS, isChecked).apply();
+                mSharedPrefs.edit().putBoolean(ToonFormatter.FLIPPED_COLORS, isChecked).apply();
             }
         });
     }
