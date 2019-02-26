@@ -23,6 +23,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/mage"
+            android:contentDescription="@string/icon_desc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,9 +60,9 @@
             style="@style/item_textview"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Bottom Left"
             app:layout_constraintStart_toEndOf="@id/demo_icon"
-            app:layout_constraintTop_toBottomOf="@id/demo_tl1" />
+            app:layout_constraintTop_toBottomOf="@id/demo_tl1"
+            tools:text="Bottom Left" />
 
         <TextView
             android:id="@+id/demo_br"
@@ -82,7 +83,7 @@
 
         <TextView
             android:id="@+id/label_tl1"
-            android:text="Top Left 1"
+            android:text="@string/tl1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -106,7 +107,7 @@
 
         <TextView
             android:id="@+id/label_tl2"
-            android:text="Top Left 2"
+            android:text="@string/tl2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -130,7 +131,7 @@
 
         <TextView
             android:id="@+id/label_tr"
-            android:text="Top Right"
+            android:text="@string/tr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -154,7 +155,7 @@
 
         <TextView
             android:id="@+id/label_bl"
-            android:text="Bottom Left"
+            android:text="@string/bl"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -178,7 +179,7 @@
 
         <TextView
             android:id="@+id/label_br"
-            android:text="Bottom Right"
+            android:text="@string/br"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -205,7 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="Toggle class icon/faction color"
+            android:text="@string/toggle_class_faction"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

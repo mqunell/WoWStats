@@ -2,6 +2,7 @@ package com.mattqunell.wowstats.data;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.SparseArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +27,11 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
 
     // Blizzard stores each toon's race and class as ints. These Maps are used to convert these ints
     // to their respective Strings
-    private static final Map<Integer, String> RACES;
-    private static final Map<Integer, String> CLASSES;
+    private static final SparseArray<String> RACES;
+    private static final SparseArray<String> CLASSES;
 
     static {
-        RACES = new HashMap<>();
+        RACES = new SparseArray<>();
         RACES.put(1, "Human");
         RACES.put(2, "Orc");
         RACES.put(3, "Dwarf");
@@ -52,7 +53,7 @@ public class BlizzardConnection extends AsyncTask<String, Void, String> {
         RACES.put(34, "Dark Iron Dwarf");
         RACES.put(36, "Mag'har Orc");
 
-        CLASSES = new HashMap<>();
+        CLASSES = new SparseArray<>();
         CLASSES.put(1, "Warrior");
         CLASSES.put(2, "Paladin");
         CLASSES.put(3, "Hunter");

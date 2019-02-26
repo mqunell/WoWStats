@@ -13,7 +13,10 @@
     <string name="added">%1$s added</string>
     <string name="updated">%1$s updated</string>
 
-    <!-- ToonListFragment.ToonHolder -->
+    <!-- fragment_toon_item -->
+    <string name="icon_desc">Class or faction icon</string>
+
+    <!-- ToonHolder -->
     <string name="level_ilevel">%1$s / %2$s</string>
     <string name="mythicscore_highestmythic">%1$d / %2$d</string>
 
@@ -25,6 +28,13 @@
     <string name="customize">Customize</string>
 
     <!-- activity_customize -->
+    <string name="tl1">Top Left 1</string>
+    <string name="tl2">Top Left 2</string>
+    <string name="tr">Top Right</string>
+    <string name="bl">Bottom Left</string>
+    <string name="br">Bottom Right</string>
+    <string name="toggle_class_faction">Toggle class icon/faction color</string>
+
     <string-array name="spinner_options">
         <item>Class</item>
         <item>Faction</item>

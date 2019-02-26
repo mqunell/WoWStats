@@ -132,13 +132,15 @@ public class CustomizeActivity extends AppCompatActivity {
         if (!toggleStatus) {
             ((ImageView) findViewById(R.id.demo_icon))
                     .setImageDrawable(getResources().getDrawable(R.drawable.mage));
-            ((ConstraintLayout) findViewById(R.id.demo_layout))
+
+            findViewById(R.id.demo_layout)
                     .setBackgroundColor(getResources().getColor(R.color.alliance));
         }
         else {
             ((ImageView) findViewById(R.id.demo_icon))
                     .setImageDrawable(getResources().getDrawable(R.drawable.alliance));
-            ((ConstraintLayout) findViewById(R.id.demo_layout))
+
+            findViewById(R.id.demo_layout)
                     .setBackgroundColor(getResources().getColor(R.color.mage));
 
         }
